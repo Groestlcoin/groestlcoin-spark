@@ -31,7 +31,7 @@ const footer = ({ info, btcusd, msatusd, rate, conf: { unit, theme, expert } }) 
       , ` · `, a({ attrs: { href: '#/node' } }, info.id.substr(0,10))
 
       , btcusd ? (
-          [ 'usd', 'btc' ].includes(unit) ? ` · 1 btc = $${ numbro(btcusd).format(btcFormatOpt) }`
+          [ 'usd', 'grs' ].includes(unit) ? ` · 1 grs = $${ numbro(btcusd).format(btcFormatOpt) }`
         : useCents(unit, btcusd) ? ` · 1 ${unitName(unit)} = ${formatAmt(1/rate*100, msatusd, 4, false)}¢`
         : ` · 1 ${unitName(unit)} = $${formatAmt(1/rate, msatusd, 3, false)}`
         ) : ''
@@ -41,8 +41,8 @@ const footer = ({ info, btcusd, msatusd, rate, conf: { unit, theme, expert } }) 
     ])
   )
 
-// display sat and bits as cents if they're worth less than $0.01
-, useCents = (unit, btcusd) => (unit == 'sat' && +btcusd < 1000000) || (unit == 'bits' && +btcusd < 10000)
+// display gro and groestls as cents if they're worth less than $0.01
+, useCents = (unit, btcusd) => (unit == 'gro' && +btcusd < 1000000) || (unit == 'groestls' && +btcusd < 10000)
 , unitName = unit => unit.replace(/s$/, '')
 , btcFormatOpt = { mantissa: 2, trimMantissa: true, optionalMantissa: true }
 

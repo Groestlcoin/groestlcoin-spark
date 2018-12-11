@@ -15,9 +15,9 @@ const
 
 const
   themes   = 'cerulean cosmo cyborg dark flatly lumen lux materia sandstone simplex slate solar spacelab superhero united yeti'.split(' ')
-, units    = 'sat bits milli btc usd'.split(' ')
-, unitprec = { sat: 3, bits: 5, milli: 8, btc: 11, usd: 6 }
-, unitrate = { sat: 0.001, bits: 0.00001, milli: 0.00000001, btc: 0.00000000001 }
+, units    = 'gro groestls milli grs usd'.split(' ')
+, unitprec = { gro: 3, groestls: 5, milli: 8, grs: 11, usd: 6 }
+, unitrate = { gro: 0.001, groestls: 0.00001, milli: 0.00000001, grs: 0.00000000001 }
 , unitstep = { ...unitrate, usd: 0.000001 }
 
 module.exports = ({ dismiss$, togExp$, togTheme$, togUnit$, page$, goHome$, goRecv$, goChan$
@@ -33,7 +33,7 @@ module.exports = ({ dismiss$, togExp$, togTheme$, togUnit$, page$, goHome$, goRe
     conf     = (name, def, list) => savedConf$.first().map(c => c[name] || def).map(list ? idx(list) : idn)
   , expert$  = conf('expert', false)        .concat(togExp$)  .scan(x => !x)
   , theme$   = conf('theme', 'dark', themes).concat(togTheme$).scan(n => (n+1) % themes.length).map(n => themes[n])
-  , unit$    = conf('unit',  'bits',  units).concat(togUnit$) .scan(n => (n+1) % units.length) .map(n => units[n])
+  , unit$    = conf('unit',  'groestls',  units).concat(togUnit$) .scan(n => (n+1) % units.length) .map(n => units[n])
   , conf$    = combine({ expert$, theme$, unit$ })
 
   // Currency & unit conversion handling

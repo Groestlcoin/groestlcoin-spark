@@ -2,7 +2,7 @@ import LightningClient from 'lightning-client'
 import EventEmitter from 'events'
 import { get } from 'superagent'
 
-const rateUrl = 'https://www.bitstamp.net/api/v2/ticker/btcusd'
+const rateUrl = 'https://api.coingecko.com/api/v3/simple/price?ids=groestlcoin&vs_currencies=usd'
     , rateInterval = 60000 // 1 minute
 
 module.exports = lnPath => {
@@ -32,7 +32,7 @@ module.exports = lnPath => {
   ;(async function getrate() {
     if (em.listenerCount('rate') || !lastRate) {
       // only pull if someone is listening or if we don't have a rate yet
-      try { em.emit('rate', lastRate = await get(rateUrl).then(r => r.body.last)) }
+      try { em.emit('rate', lastRate = await get(rateUrl).then(r => r.body.usd)) }
       catch (err) { console.error(err.stack || err.toString()) }
       setTimeout(getrate, rateInterval)
     } else {

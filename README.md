@@ -121,7 +121,7 @@ See [`doc/startup-systemd.md`](doc/startup-systemd.md).
 
 Electron-based desktop apps for Linux (packaged as `deb`, `AppImage`, `snap` and `tar.gz`),
 macOS (as `zip`) and Windows (installer and a portable) are available for download from the
-[releases page](https://github.com/shesek/spark-wallet/releases).
+[releases page](https://github.com/groestlcoin/spark-wallet/releases).
 
 The desktop apps comes bundled with the Spark server-side component. If you're connecting to a local
 c-lightning instance, you [can configure](https://user-images.githubusercontent.com/877904/44618385-68f40100-a87d-11e8-891b-79a0f2d59751.png)
@@ -174,7 +174,7 @@ The QR scanner works if you access Spark without using the PWA "Add to homescree
 - **Pay** and **Request** are pretty intuitive and don't require much explaining. Try them!
 
 - **Display unit:** Click the balance on the top-right or the unit in the "request payment" page to toggle the currency display unit.
-  The available options are sat, bits, milli, btc and usd.
+  The available options are gro, groestls, milli, grs and usd.
 
 - **Theme switcher:** Click the theme name on the bottom-right to change themes (you can choose between 16 [bootswatch](https://bootswatch.com) themes).
 
@@ -207,7 +207,7 @@ with bootstrap for theming and a nodejs/express server as the backend.
 To start a development server with live compilation for babel, browserify, pug and stylus, run:
 
 ```bash
-$ git clone https://github.com/shesek/spark-wallet && cd spark-wallet
+$ git clone https://github.com/groestlcoin/spark-wallet && cd spark-wallet
 $ npm install
 $ npm start -- --ln-path /data/lightning
 ```
@@ -224,27 +224,14 @@ See [`doc/dev-regtest-env.md`](doc/dev-regtest-env.md) for instructions setting 
 
 Pull requests, suggestions and comments are welcome!
 
-## Code signing & reproducible builds
+## Reproducible builds
 
-Signed distribution checksums are available in the git repo at
-[`SHA256SUMS.asc`](SHA256SUMS.asc)
-(updated with every versioned release)
-and on the [releases page](https://github.com/shesek/spark-wallet/releases).
-Git version tags are signed too.
-
-The releases are signed by Nadav Ivgi (@shesek).
-The public key can be verified on [keybase](https://keybase.io/nadav),
-[github](https://api.github.com/users/shesek/gpg_keys),
-[twitter](https://twitter.com/shesek) (under bio),
-[HN](https://news.ycombinator.com/user?id=nadaviv)
-or on [a domain he's known to control](https://www.bitrated.com/.keys/staff/nadav.asc).
-
-To install the signed NPM package, download it from
-[the releases page](https://github.com/shesek/spark-wallet/releases), verify the hash
+To install the NPM package, download it from
+[the releases page](https://github.com/groestlcoin/spark-wallet/releases)
 and install using `$ npm install -g spark-wallet-[x.y.z]-npm.tgz`.
 
-To install the signed Docker image, get the image hash from `SHA256SUMS.asc` and install it with
-`$ docker pull shesek/spark-wallet@sha256:[image-hash-verified-by-be-signed]`.
+To install the Docker image, install it with
+`$ docker pull groestlcoin/spark-wallet`.
 
 The NPM package, Android `apk` builds, Linux `tar.gz`/`snap` builds, macOS `zip` builds and Windows builds (installer and portable)
 [are deterministically reproducible](doc/reproducible-builds.md).
