@@ -36,7 +36,7 @@ exports.parseRes = ({ HTTP, SSE }) => {
 
   // push updates via server-sent events
   , incoming$: SSE('inv-paid')
-  , btcusd$:   SSE('btcusd')
+  , grsusd$:   SSE('grsusd')
   }
 }
 

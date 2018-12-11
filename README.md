@@ -110,7 +110,7 @@ the advantages of using an hidden service, and instructions for connecting from 
 
 #### Deploy with Docker
 
-Spark is also available as a Docker image that comes bundled with bitcoind and c-lightning.
+Spark is also available as a Docker image that comes bundled with groestlcoind and c-lightning.
 See [`doc/docker.md`](doc/docker.md) for details.
 
 #### Adding to startup with `systemd`

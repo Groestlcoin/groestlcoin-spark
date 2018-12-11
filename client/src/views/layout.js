@@ -21,7 +21,7 @@ const navbar = ({ unitf, cbalance, page }) =>
   , cbalance != null ? span('.toggle-unit.navbar-brand.mr-0', unitf(cbalance)) : ''
   ]))
 
-const footer = ({ info, btcusd, msatusd, rate, conf: { unit, theme, expert } }) =>
+const footer = ({ info, grsusd, msatusd, rate, conf: { unit, theme, expert } }) =>
   div('.main-bg',
     h('footer.container.clearfix.text-muted.border-top.border-light', [
       p('.info.float-left', [
@@ -30,9 +30,9 @@ const footer = ({ info, btcusd, msatusd, rate, conf: { unit, theme, expert } }) 
       , ` · ${info.network}`
       , ` · `, a({ attrs: { href: '#/node' } }, info.id.substr(0,10))
 
-      , btcusd ? (
-          [ 'usd', 'grs' ].includes(unit) ? ` · 1 grs = $${ numbro(btcusd).format(btcFormatOpt) }`
-        : useCents(unit, btcusd) ? ` · 1 ${unitName(unit)} = ${formatAmt(1/rate*100, msatusd, 4, false)}¢`
+      , grsusd ? (
+          [ 'usd', 'grs' ].includes(unit) ? ` · 1 grs = $${ numbro(grsusd).format(grsFormatOpt) }`
+        : useCents(unit, grsusd) ? ` · 1 ${unitName(unit)} = ${formatAmt(1/rate*100, msatusd, 4, false)}¢`
         : ` · 1 ${unitName(unit)} = $${formatAmt(1/rate, msatusd, 3, false)}`
         ) : ''
       ])
@@ -42,8 +42,8 @@ const footer = ({ info, btcusd, msatusd, rate, conf: { unit, theme, expert } }) 
   )
 
 // display gro and groestls as cents if they're worth less than $0.01
-, useCents = (unit, btcusd) => (unit == 'gro' && +btcusd < 1000000) || (unit == 'groestls' && +btcusd < 10000)
+, useCents = (unit, grsusd) => (unit == 'gro' && +grsusd < 1000000) || (unit == 'groestls' && +grsusd < 10000)
 , unitName = unit => unit.replace(/s$/, '')
-, btcFormatOpt = { mantissa: 2, trimMantissa: true, optionalMantissa: true }
+, grsFormatOpt = { mantissa: 2, trimMantissa: true, optionalMantissa: true }
 
 module.exports = { layout }

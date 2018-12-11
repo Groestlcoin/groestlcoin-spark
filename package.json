@@ -12,12 +12,12 @@
     "dist:electron": "cd electron && npm run dist --",
     "release": "./scripts/release.sh"
   },
-  "repository": "https://github.com/shesek/spark-wallet",
+  "repository": "https://github.com/groestlcoin/spark-wallet",
   "files": [
     "dist"
   ],
   "keywords": [
-    "bitcoin",
+    "groestlcoin",
     "lightning",
     "wallet",
     "lightning-wallet",

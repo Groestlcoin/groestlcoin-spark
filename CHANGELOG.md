@@ -3,7 +3,7 @@
 ## Unreleased
 
 - Add `--cookie-file/-C <path>` to persist randomly generated login credentials to `<path>`
-  (similar to the cookie file feature in bitcoind).
+  (similar to the cookie file feature in groestlcoind).
 
 - Add `--public-url` CLI option
 
@@ -25,7 +25,7 @@
 
 - Bug fix: calculate off-chain balance correctly
 
-- Docker: update c-lightning and Bitcoin Core
+- Docker: update c-lightning and Groestlcoin Core
 
 ## 0.2.0-rc.1 - 2018-12-03
 
@@ -47,7 +47,7 @@
 
 - Bug fix: treat socket errors as warnings instead of crashing the process (#23, 56635b8af3fb54)
 
-- Docker: Update to Bitcoin Core v0.16.3 (e718bf8324599)
+- Docker: Update to Groestlcoin Core v2.16.3
 
 - Docker: Rename {SPARK,BITCOIND}_OPTS to {SPARK,BITCOIND}_OPT (#18, 4a66cb0b6c24)
 

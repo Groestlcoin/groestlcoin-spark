@@ -6,7 +6,7 @@ trap 'jobs -p | xargs -r kill' SIGTERM
 : ${LIGHTNINGD_OPT:=--log-level=debug}
 : ${BITCOIND_OPT:=-debug=rpc}
 
-[[ "$NETWORK" == "mainnet" ]] && NETWORK=bitcoin
+[[ "$NETWORK" == "mainnet" ]] && NETWORK=groestlcoin
 
 if [ -d /etc/lightning ]; then
   echo -n "Using lightningd directory mounted in /etc/lightning... "
@@ -14,42 +14,42 @@ if [ -d /etc/lightning ]; then
 
 else
 
-  # Setup bitcoind (only needed when we're starting our own lightningd instance)
-  if [ -d /etc/bitcoin ]; then
-    echo -n "Connecting to bitcoind configured in /etc/bitcoin... "
+  # Setup groestlcoind (only needed when we're starting our own lightningd instance)
+  if [ -d /etc/groestlcoin ]; then
+    echo -n "Connecting to groestlcoind configured in /etc/groestlcoin... "
 
-    RPC_OPT="-datadir=/etc/bitcoin $([[ -z "$BITCOIND_RPCCONNECT" ]] || echo "-rpcconnect=$BITCOIND_RPCCONNECT")"
+    RPC_OPT="-datadir=/etc/groestlcoin $([[ -z "$BITCOIND_RPCCONNECT" ]] || echo "-rpcconnect=$BITCOIND_RPCCONNECT")"
 
   elif [ -n "$BITCOIND_URI" ]; then
     [[ "$BITCOIND_URI" =~ ^[a-z]+:\/+(([^:/]+):([^@/]+))@([^:/]+:[0-9]+)/?$ ]] || \
-      { echo >&2 "ERROR: invalid bitcoind URI: $BITCOIND_URI"; exit 1; }
+      { echo >&2 "ERROR: invalid groestlcoind URI: $BITCOIND_URI"; exit 1; }
 
-    echo -n "Connecting to bitcoind at ${BASH_REMATCH[4]}... "
+    echo -n "Connecting to groestlcoind at ${BASH_REMATCH[4]}... "
 
     RPC_OPT="-rpcconnect=${BASH_REMATCH[4]}"
 
     if [ "${BASH_REMATCH[2]}" != "__cookie__" ]; then
       RPC_OPT="$RPC_OPT -rpcuser=${BASH_REMATCH[2]} -rpcpassword=${BASH_REMATCH[3]}"
     else
-      RPC_OPT="$RPC_OPT -datadir=/tmp/bitcoin"
-      [[ "$NETWORK" == "bitcoin" ]] && NET_PATH=/tmp/bitcoin || NET_PATH=/tmp/bitcoin/$NETWORK
+      RPC_OPT="$RPC_OPT -datadir=/tmp/groestlcoin"
+      [[ "$NETWORK" == "groestlcoin" ]] && NET_PATH=/tmp/groestlcoin || NET_PATH=/tmp/groestlcoin/$NETWORK
       mkdir -p $NET_PATH
       echo "${BASH_REMATCH[1]}" > $NET_PATH/.cookie
     fi
 
   else
-    echo -n "Starting bitcoind... "
+    echo -n "Starting groestlcoind... "
 
-    mkdir -p /data/bitcoin
-    RPC_OPT="-datadir=/data/bitcoin"
+    mkdir -p /data/groestlcoin
+    RPC_OPT="-datadir=/data/groestlcoin"
 
-    bitcoind -$NETWORK $RPC_OPT $BITCOIND_OPT &
+    groestlcoind -$NETWORK $RPC_OPT $BITCOIND_OPT &
     echo -n "waiting for cookie... "
-    sed --quiet '/^\.cookie$/ q' <(inotifywait -e create,moved_to --format '%f' -qmr /data/bitcoin)
+    sed --quiet '/^\.cookie$/ q' <(inotifywait -e create,moved_to --format '%f' -qmr /data/groestlcoin)
   fi
 
   echo -n "waiting for RPC... "
-  bitcoin-cli -$NETWORK $RPC_OPT -rpcwait getblockchaininfo > /dev/null
+  groestlcoin-cli -$NETWORK $RPC_OPT -rpcwait getblockchaininfo > /dev/null
   echo "ready."
 
   # Setup lightning
@@ -61,7 +61,7 @@ else
   lnopt=($LIGHTNINGD_OPT --network=$NETWORK --lightning-dir="$LN_PATH" --log-file=debug.log)
   [[ -z "$LN_ALIAS" ]] || lnopt+=(--alias="$LN_ALIAS")
 
-  lightningd "${lnopt[@]}" $(echo "$RPC_OPT" | sed -r 's/(^| )-/\1--bitcoin-/g') > /dev/null &
+  lightningd "${lnopt[@]}" $(echo "$RPC_OPT" | sed -r 's/(^| )-/\1--groestlcoin-/g') > /dev/null &
 fi
 
 if [ ! -S /etc/lightning/lightning-rpc ]; then

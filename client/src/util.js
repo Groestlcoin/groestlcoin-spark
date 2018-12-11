@@ -10,7 +10,7 @@ export const formatAmt = (amt, rate, digits, comma=true) =>
         .format({ thousandSeparated: comma, mantissa: digits, trimMantissa: true, optionalMantissa: true })
     : ''
 
-const reUri = /^lightning:([a-z0-9]+)|^bitcoin:.*[?&]lightning=([a-z0-9]+)|^(ln[a-z0-9]+)$/i
+const reUri = /^lightning:([a-z0-9]+)|^groestlcoin:.*[?&]lightning=([a-z0-9]+)|^(ln[a-z0-9]+)$/i
 
 export const parseUri = uri => {
   const m = uri.trim().match(reUri)

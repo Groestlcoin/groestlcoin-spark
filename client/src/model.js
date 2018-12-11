@@ -2,7 +2,7 @@ import big from 'big.js'
 import { Observable as O } from './rxjs'
 import { dbg, getChannels, formatAmt, recvAmt, combine, isConnError } from './util'
 
-const msatbtc = big(100000000000) // msat in 1 btc
+const msatgrs = big(100000000000) // mgro in 1 grs
 
 const
   sumChans = chans => chans.filter(c => c.peer.connected && c.chan.state === 'CHANNELD_NORMAL')
@@ -26,7 +26,7 @@ module.exports = ({ dismiss$, togExp$, togTheme$, togUnit$, page$, goHome$, goRe
                   , conf$: savedConf$
                   , req$$, error$, invoice$, incoming$, outgoing$, payments$, invoices$, funds$
                   , funded$, closed$
-                  , btcusd$, info$, peers$ }) => {
+                  , grsusd$, info$, peers$ }) => {
   const
 
   // Config options
@@ -37,7 +37,7 @@ module.exports = ({ dismiss$, togExp$, togTheme$, togUnit$, page$, goHome$, goRe
   , conf$    = combine({ expert$, theme$, unit$ })
 
   // Currency & unit conversion handling
-  , msatusd$ = btcusd$.map(rate => big(rate).div(msatbtc)).startWith(null)
+  , msatusd$ = grsusd$.map(rate => big(rate).div(msatgrs)).startWith(null)
   , rate$    = O.combineLatest(unit$, msatusd$, (unit, msatusd) => unitrate[unit] || msatusd)
   , unitf$   = O.combineLatest(unit$, rate$, (unit, rate) => msat => `${rate ? formatAmt(msat, rate, unitprec[unit]) : 'n/a'} ${unit}`)
 
@@ -171,6 +171,6 @@ module.exports = ({ dismiss$, togExp$, togTheme$, togUnit$, page$, goHome$, goRe
   , feed$: feed$.startWith(null), feedStart$, feedActive$
   , amtData$, chanActive$, rpcHist$
   , fundMaxChan$
-  , msatusd$, btcusd$: btcusd$.startWith(null)
+  , msatusd$, grsusd$: grsusd$.startWith(null)
   }).shareReplay(1)
 }
