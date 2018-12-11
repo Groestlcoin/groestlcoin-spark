@@ -1,17 +1,22 @@
 FROM node:8.11-slim as builder
 
-# Install c-lightning
-RUN apt-get update && apt-get install -y --no-install-recommends autoconf automake build-essential git libtool libgmp-dev \
-  libsqlite3-dev python python3 wget zlib1g-dev
+ARG DEVELOPER
+ARG STANDALONE
+ENV STANDALONE=$STANDALONE
+
+# Install build c-lightning for third-party packages (c-lightning/bitcoind)
+RUN apt-get update && apt-get install -y --no-install-recommends git \
+    $([ -n "$STANDALONE" ] || echo "autoconf automake build-essential git libtool libgmp-dev \
+                                     libsqlite3-dev python python3 wget zlib1g-dev")
 
 ARG LIGHTNINGD_VERSION=608b1a236b19564765355790667c9843c19d84a9
-ARG DEVELOPER
 
-RUN git clone https://github.com/ElementsProject/lightning.git /opt/lightningd \
+RUN [ -n "$STANDALONE" ] || ( \
+    git clone https://github.com/ElementsProject/lightning.git /opt/lightningd \
     && cd /opt/lightningd \
     && git checkout $LIGHTNINGD_VERSION \
     && DEVELOPER=$DEVELOPER ./configure \
-    && make
+    && make)
 
 # Install groestlcoind
 
@@ -24,7 +29,12 @@ RUN mkdir /opt/groestlcoin && cd /opt/groestlcoin \
     && echo "$GROESTLCOIN_SHA256  groestlcoin.tar.gz" | sha256sum -c - \
     && tar -xzvf groestlcoin.tar.gz groestlcoin-cli --exclude=*-qt \
     && rm groestlcoin.tar.gz
-    
+
+    RUN mkdir /opt/bin && ([ -n "$STANDALONE" ] || \
+        (mv /opt/lightningd/cli/lightning-cli /opt/bin/ \
+        && mv /opt/lightningd/lightningd/lightning* /opt/bin/ \
+        && mv /opt/groestlcoin/bin/* /opt/bin/))
+
 # npm doesn't normally like running as root, allow it since we're in docker
 RUN npm config set unsafe-perm true
 
@@ -50,17 +60,19 @@ RUN npm run dist:npm \
 
 FROM node:8.11-slim
 
+ARG STANDALONE
+ENV STANDALONE=$STANDALONE
+
 WORKDIR /opt/spark
 
-RUN apt-get update && apt-get install -y --no-install-recommends inotify-tools libgmp-dev libsqlite3-dev xz-utils \
+RUN ([ -n "$STANDALONE" ] || ( \
+          apt-get update && apt-get install -y --no-install-recommends inotify-tools libgmp-dev libsqlite3-dev xz-utils)) \
     && rm -rf /var/lib/apt/lists/* \
     && ln -s /opt/spark/dist/cli.js /usr/bin/spark-wallet \
     && mkdir /data \
     && ln -s /data/lightning $HOME/.lightning
 
-COPY --from=builder /opt/lightningd/cli/lightning-cli /usr/bin
-COPY --from=builder /opt/lightningd/lightningd/lightning* /usr/bin/
-COPY --from=builder /opt/groestlcoin/bin /usr/bin
+COPY --from=builder /opt/bin /usr/bin
 COPY --from=builder /opt/spark /opt/spark
 
 ENV CONFIG=/data/spark/config TLS_PATH=/data/spark/tls TOR_PATH=/data/spark/tor HOST=0.0.0.0

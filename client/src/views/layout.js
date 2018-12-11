@@ -28,7 +28,7 @@ const footer = ({ info, grsusd, msatusd, rate, conf: { unit, theme, expert } }) 
         span('.toggle-exp', `${expert?'🔧 ':''} v${process.env.VERSION}`)
 
       , ` · ${info.network}`
-      , ` · `, a({ attrs: { href: '#/node' } }, info.id.substr(0,10))
+      , ` · `, a({ attrs: { href: '#/node' } }, `node: ${info.id.substr(0,10)}`)
 
       , grsusd ? (
           [ 'usd', 'grs' ].includes(unit) ? ` · 1 grs = $${ numbro(grsusd).format(grsFormatOpt) }`
