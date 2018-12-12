@@ -32,7 +32,7 @@ module.exports = lnPath => {
   ;(async function getrate() {
     if (em.listenerCount('rate') || !lastRate) {
       // only pull if someone is listening or if we don't have a rate yet
-      try { em.emit('rate', lastRate = await get(rateUrl).then(r => r.body.usd)) }
+      try { em.emit('rate', lastRate = await get(rateUrl).then(r => r.body.groestlcoin.usd)) }
       catch (err) { console.error(err.stack || err.toString()) }
       setTimeout(getrate, rateInterval)
     } else {
