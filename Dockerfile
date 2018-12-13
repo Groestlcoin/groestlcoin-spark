@@ -1,7 +1,7 @@
 FROM node:8.11-slim as builder
 
 ARG DEVELOPER
-ARG STANDALONE
+ARG STANDALONE=1
 ENV STANDALONE=$STANDALONE
 
 # Install build c-lightning for third-party packages (c-lightning/groestlcoind)
