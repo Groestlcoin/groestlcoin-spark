@@ -72,7 +72,7 @@ module.exports = ({ dismiss$, togExp$, togTheme$, togUnit$, page$, goHome$, goRe
     )
     // hide "connection lost" errors when we get back online
     .combineLatest(connected$, (alert, conn) => alert && (isConnError(alert[1]) && conn ? null : alert))
-    // format msat amounts in messages
+    // format mgro amounts in messages
     .combineLatest(unitf$, (alert, unitf) => alert && [ alert[0], fmtAlert(alert[1], unitf) ])
     .startWith(null)
 

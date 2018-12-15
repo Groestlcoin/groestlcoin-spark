@@ -56,9 +56,9 @@ export const newChannel = ({ amtData, fundMaxChan, obalance, unitf, conf: { unit
 
   , formGroup('Channel funding', div([
       !fundMaxChan
-        ? amountField(amtData, 'channel_capacity_msat', true, availText)
+        ? amountField(amtData, 'channel_capacity_mgro', true, availText)
         : div('.input-group', [
-            input({ attrs: { type: 'hidden', name: 'channel_capacity_msat', value: 'all' } })
+            input({ attrs: { type: 'hidden', name: 'channel_capacity_mgro', value: 'all' } })
           , input('.form-control.form-control-lg.disabled', { attrs: { disabled: true, placeholder: availText } })
           , div('.input-group-append.toggle-unit', span('.input-group-text', unit))
           ])
