@@ -43,7 +43,7 @@ const confirmPay = payreq => ({ unitf, amtData, conf: { expert } }) =>
     , p([ 'Confirm paying ', strong('.toggle-unit', unitf(payreq.msatoshi)), '?'])
     ] : [
       h2('Send payment')
-    , formGroup('Amount to pay', amountField(amtData, 'custom_gro', true))
+    , formGroup('Amount to pay', amountField(amtData, 'custom_msat', true))
     ])
 
   , showDesc(payreq) ? p([ 'Description: ', span('.text-muted.break-all', payreq.description) ]) : ''
