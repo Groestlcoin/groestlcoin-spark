@@ -9,7 +9,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends git \
     $([ -n "$STANDALONE" ] || echo "autoconf automake build-essential git libtool libgmp-dev \
                                      libsqlite3-dev python python3 wget zlib1g-dev")
 
-ARG LIGHTNINGD_VERSION=6417fce159b70bc4cb61b024bd9d36b9b8f3ef8d 
+ARG LIGHTNINGD_VERSION=09de19044ad6e4a3526dd4dcdb67074c2f6cdac2
 
 RUN [ -n "$STANDALONE" ] || ( \
     git clone https://github.com/Groestlcoin/lightning.git /opt/lightningd \
