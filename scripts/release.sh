@@ -40,7 +40,7 @@ if [[ -z "$SKIP_BUILD" ]]; then
     mv docker-builds/spark-wallet-*-npm.tgz .
     mv -f docker-builds/npm-unpacked dist
     mv -f docker-builds/electron electron/dist
-    mv -f docker-builds/cordova-android cordova/platforms/android/app/build/outputs/apk/debug
+    mv -f docker-builds/cordova-android-debug cordova/platforms/android/app/build/outputs/apk/debug
   else
     npm run dist:npm -- --pack-tgz
     npm run dist:electron -- --linux --mac # building windows require wine (only done in docker)
@@ -101,10 +101,9 @@ if [[ -z "$SKIP_UPLOAD" && -n "$GH_TOKEN" ]]; then
 
     curl -f --progress-bar -H "$gh_auth" -H "Content-Type: application/octet-stream" \
          --data-binary @"$file" "$gh_upload?name=$(basename $file)" | (grep -v browser_download_url || true)
+  done
 
   # make release public once everything is ready
   curl -sf -H "$gh_auth" -X PATCH $gh_base/releases/`echo "$gh_release" | jq -r .id` \
     -d '{"draft":false}'
-
-  done
 fi
