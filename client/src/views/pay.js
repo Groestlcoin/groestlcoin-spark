@@ -8,7 +8,7 @@ const hasCam = (navigator.mediaDevices && navigator.mediaDevices.getUserMedia)
     , isPWAiOS = isiOS && navigator.standalone
     , camSuggest = hasCam ? null
       : iOSVer < 11 ? 'WebRTC is only available since iOS 11.2+.'
-      : isPWAiOS ? 'PWAs on iOS cannot access WebRTC. Try opening Spark in your regular Safari browser without using "Add to homescreen".'
+      : isPWAiOS ? 'PWAs on iOS cannot access WebRTC. Try opening Groestlcoin Spark in your regular Safari browser without using "Add to homescreen".'
       : isiOS ? 'On iOS, only Safari can access WebRTC. Try changing or updating your browser.'
       : 'Try updating your browser.'
 

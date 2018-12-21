@@ -15,7 +15,7 @@ document.addEventListener('deviceready', _ => {
 
 function display(msg) {
   if (enabled && !isActive)
-    plugin.schedule({ title: 'Spark', text: msg, foreground: true, vibrate: true })
+    plugin.schedule({ title: 'Groestlcoin Spark', text: msg, foreground: true, vibrate: true })
 }
 
 module.exports = msg$ => (
