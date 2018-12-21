@@ -41,7 +41,7 @@ exports.parseRes = ({ HTTP, SSE }) => {
 }
 
 // RPC commands to send
-// NOTE: "connectfund" and "closeget" are custom rpc commands provided by the Spark server.
+// NOTE: "connectfund" and "closeget" are custom rpc commands provided by the Groestlcoin Spark server.
 exports.makeReq = ({ viewPay$, confPay$, newInv$, goLogs$, goChan$, goNewChan$, updChan$, openChan$, closeChan$, execRpc$ }) => O.merge(
   viewPay$.map(bolt11 => [ 'decodepay', [ bolt11 ], { bolt11 } ])
 , confPay$.map(pay    => [ 'pay',       [ pay.bolt11, ...(pay.custom_msat ? [ pay.custom_msat ] : []) ], pay ])

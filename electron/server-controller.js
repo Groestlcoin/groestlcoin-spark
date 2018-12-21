@@ -4,7 +4,7 @@ const { app, ipcMain } = require('electron')
     , Store = require('electron-store')
     , path = require('path')
 
-const store = new Store({ name: 'spark-server' })
+const store = new Store({ name: 'groestlcoin-spark' })
 
 let accessKey = store.get('accessKey')
 accessKey || store.set('accessKey', accessKey = randomBytes(32).toString('hex'))

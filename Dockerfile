@@ -38,7 +38,7 @@ RUN mkdir /opt/groestlcoin && cd /opt/groestlcoin \
 # npm doesn't normally like running as root, allow it since we're in docker
 RUN npm config set unsafe-perm true
 
-# Install Spark
+# Install Groestlcoin Spark
 WORKDIR /opt/spark/client
 COPY client/package.json client/npm-shrinkwrap.json ./
 COPY client/fonts ./fonts

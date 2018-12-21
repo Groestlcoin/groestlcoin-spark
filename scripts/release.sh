@@ -22,7 +22,7 @@ grep '## Unreleased' CHANGELOG.md && sed -i "s/^## Unreleased/## $version - `dat
 # Try loading Android signing keys
 [[ -z "$ANDROID_SIGN_CONFIG" && -f ../spark-signing-keys/build.json ]] && ANDROID_SIGN_CONFIG=`pwd`/../spark-signing-keys/build.json
 
-echo -e "Building Spark v$version\n\n$changelog\n\n"
+echo -e "Building Groestlcoin Spark v$version\n\n$changelog\n\n"
 
 # Build NPM, Electron and Cordova dist files
 if [[ -z "$SKIP_BUILD" ]]; then
