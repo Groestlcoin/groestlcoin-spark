@@ -21,7 +21,7 @@ TZ=UTC find dist -exec touch -t "1711081658.41" {} \;
 
 # Package to spark-wallet-[x.y.z]-npm.tgz
 if [[ "$1" == "--pack-tgz" ]]; then
-  rm -f spark-wallet-*-npm.tgz
+  rm -f groestlcoin-spark-*-npm.tgz
   packpath=`npm pack`
   mv $packpath ${packpath/.tgz/-npm.tgz}
 fi
