@@ -5,7 +5,7 @@
     "dist": "./build.sh",
     "postinstall": "(cd fonts && npm install) && ./fonts/rewrite-css.sh node_modules/bootswatch/dist/*/*.min.css"
   },
-  "author": "Nadav Ivgi",
+  "author": "Groestlcoin Developers",
   "license": "MIT",
   "dependencies": {
     "@cycle/dom": "^20.4.0",

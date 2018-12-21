@@ -1,5 +1,5 @@
 {
-    "name": "com.spark.wallet",
+    "name": "org.groestlcoin.spark",
     "requires": true,
     "lockfileVersion": 1,
     "dependencies": {

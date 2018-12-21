@@ -24,7 +24,7 @@
     "lightning-network",
     "c-lightning"
   ],
-  "author": "Nadav Ivgi",
+  "author": "Groestlcoin Developers",
   "license": "MIT",
   "engines": {
     "node": ">=6.0.0"

@@ -1,9 +1,9 @@
 {
-    "name": "com.spark.wallet",
-    "displayName": "SparkWallet",
+    "name": "org.groestlcoin.spark",
+    "displayName": "GroestlcoinSpark",
     "private": true,
     "description": "A minimalistic wallet GUI for c-lightning",
-    "author": "Nadav Ivgi",
+    "author": "Groestlcoin developers",
     "license": "MIT",
     "scripts": {
         "dist": "./build.sh"

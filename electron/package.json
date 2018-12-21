@@ -1,5 +1,5 @@
 {
-  "name": "spark-wallet",
+  "name": "groestlcoin-spark",
   "description": "A minimalistic wallet GUI for c-lightning",
   "private": true,
   "main": "main.js",
@@ -7,8 +7,8 @@
     "start": "electron .",
     "dist": "./build.sh"
   },
-  "author": "Nadav Ivgi <nadav@shesek.info>",
-  "repository": "https://github.com/shesek/spark-wallet",
+  "author": "Groestlcoin Developers <groestlcoin@gmail.com>",
+  "repository": "https://github.com/groestlcoin/spark-wallet",
   "license": "MIT",
   "devDependencies": {
     "babelify": "^8.0.0",
@@ -20,8 +20,8 @@
     "uglify-js": "^3.4.9"
   },
   "build": {
-    "appId": "com.spark.wallet",
-    "productName": "Spark",
+    "appId": "org.groestlcoin.spark",
+    "productName": "Groestlcoin Spark",
     "artifactName": "${name}-${version}-${os}-${arch}.${ext}",
     "afterPack": "./hook-afterPack.js",
     "files": [
@@ -41,7 +41,7 @@
       "target": "zip"
     },
     "linux": {
-      "executableName": "spark-desktop",
+      "executableName": "groestlcoin-spark-desktop",
       "target": [
         "AppImage",
         "deb",

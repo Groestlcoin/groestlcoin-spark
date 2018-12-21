@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.spark.wallet" version="0.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>Spark</name>
+<widget id="org.groestlcoin.spark" version="0.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>Groestlcoin Spark</name>
     <description>A minimalistic wallet GUI for c-lightning</description>
-    <author email="nadav@shesek.info" href="https://github.com/shesek">Nadav Ivgi</author>
+    <author email="groestlcoin@gmail.com" href="https://github.com/groestlcoin">Groestlcoin Developers</author>
     <content src="index.html" />
     <access origin="*" />
     <platform name="android">
