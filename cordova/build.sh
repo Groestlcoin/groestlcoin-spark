@@ -20,5 +20,5 @@ cordova build android --$build_type "$@" -- --versionCode=$androidVer
 
 # remove previous build and give the .apk file a more descriptive name
 (cd platforms/android/app/build/outputs/apk/$build_type \
-  && rm -f groestlcoin-spark-*-android.apk \
-  && mv app-*.apk groestlcoin-spark-$version-android-$build_type.apk)
+  && rm -f spark-wallet-*-android.apk \
+  && mv app-*.apk spark-wallet-$version-android-$build_type.apk)

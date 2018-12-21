@@ -28,7 +28,7 @@ async function createWindow () {
   })
 
   const sparkServer = await control.maybeStart()
-    .catch(err => console.error('Groestlcoin Spark server failed', err.stack || err))
+    .catch(err => console.error('Spark server failed', err.stack || err))
 
   if (sparkServer) {
     // open a blank file to set serverInfo in the correct origin before opening the main app

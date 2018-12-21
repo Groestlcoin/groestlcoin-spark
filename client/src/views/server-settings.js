@@ -13,7 +13,7 @@ const settings = ({ mode, serverInfo: { serverUrl, accessKey, lnPath } }) =>
       ]))
     , div('.form-check', label('.form-check-label', { attrs: { for: 'mode-remote' } }, [
         input('#mode-remote.form-check-input', { attrs: { type: 'radio', name: 'mode', value: 'remote' }, props: { checked: mode == 'remote' } })
-      , ' Connect to remote Groestlcoin Spark server'
+      , ' Connect to remote Spark server'
       ]))
     ]))
 
