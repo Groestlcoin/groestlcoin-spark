@@ -1,5 +1,5 @@
 {
-  "name": "spark-wallet",
+  "name": "groestlcoin-spark",
   "version": "0.2.1",
   "androidVer": 203,
   "description": "A minimalistic wallet GUI for c-lightning",
