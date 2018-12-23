@@ -8,7 +8,7 @@
     "dist": "./build.sh"
   },
   "author": "Groestlcoin Developers <groestlcoin@gmail.com>",
-  "repository": "https://github.com/groestlcoin/spark-wallet",
+  "repository": "https://github.com/groestlcoin/groestlcoin-spark",
   "license": "MIT",
   "devDependencies": {
     "babelify": "^8.0.0",

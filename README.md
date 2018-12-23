@@ -121,7 +121,7 @@ See [`doc/startup-systemd.md`](doc/startup-systemd.md).
 
 Electron-based desktop apps for Linux (packaged as `deb`, `AppImage`, `snap` and `tar.gz`),
 macOS (as `zip`) and Windows (installer and a portable) are available for download from the
-[releases page](https://github.com/groestlcoin/spark-wallet/releases).
+[releases page](https://github.com/groestlcoin/groestlcoin-spark/releases).
 
 The desktop apps comes bundled with the Spark server-side component. If you're connecting to a local
 c-lightning instance, you [can configure](https://user-images.githubusercontent.com/877904/44618385-68f40100-a87d-11e8-891b-79a0f2d59751.png)
@@ -207,7 +207,7 @@ with bootstrap for theming and a nodejs/express server as the backend.
 To start a development server with live compilation for babel, browserify, pug and stylus, run:
 
 ```bash
-$ git clone https://github.com/groestlcoin/spark-wallet && cd spark-wallet
+$ git clone https://github.com/groestlcoin/groestlcoin-spark && cd groestlcoin-spark
 $ npm install
 $ npm start -- --ln-path /data/lightning
 ```
@@ -227,11 +227,11 @@ Pull requests, suggestions and comments are welcome!
 ## Reproducible builds
 
 To install the NPM package, download it from
-[the releases page](https://github.com/groestlcoin/spark-wallet/releases)
+[the releases page](https://github.com/groestlcoin/groestlcoin-spark/releases)
 and install using `$ npm install -g spark-wallet-[x.y.z]-npm.tgz`.
 
 To install the Docker image, install it with
-`$ docker pull groestlcoin/spark-wallet`.
+`$ docker pull groestlcoin/groestlcoin-spark`.
 
 The NPM package, Android `apk` builds, Linux `tar.gz`/`snap` builds, macOS `zip` builds and Windows builds (installer and portable)
 [are deterministically reproducible](doc/reproducible-builds.md).

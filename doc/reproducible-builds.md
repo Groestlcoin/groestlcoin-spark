@@ -11,7 +11,7 @@ A `Dockerfile` for reproducing the builds is available at `scripts/build-release
 It can be used as follows:
 
 ```bash
-$ git clone https://github.com/groestlcoin/spark-wallet && cd spark-wallet
+$ git clone https://github.com/groestlcoin/groestlcoin-spark && cd groestlcoin-spark
 $ docker build -f scripts/builder.Dockerfile -t spark-builder .
 $ docker run --cap-add SYS_ADMIN --device /dev/fuse --security-opt apparmor:unconfined \
             -it -v `pwd`/docker-builds:/target spark-builder
