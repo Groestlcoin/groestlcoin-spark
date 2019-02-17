@@ -1,8 +1,7 @@
 import { Observable as O } from './rxjs'
 import serialize from 'form-serialize'
-import stringArgv from 'string-argv'
 import nanoid from 'nanoid'
-import { dbg, parseUri } from './util'
+import { dbg, parseUri, parseRpcCmd } from './util'
 
 module.exports = ({ DOM, route, conf$, scan$, urihandler$ }) => {
   const
@@ -22,6 +21,8 @@ module.exports = ({ DOM, route, conf$, scan$, urihandler$ }) => {
 
   , goChan$ = route('/channels')
   , goNewChan$ = route('/channels/new')
+  , goDeposit$ = route('/deposit').mapTo('bech32')
+      .merge(click('[data-newaddr-type]').map(e => e.ownerTarget.dataset.newaddrType))
 
   // Display and confirm payment requests (from QR, lightning: URIs and manual entry)
   , viewPay$ = O.merge(scan$, urihandler$).map(parseUri).filter(x => !!x)
@@ -30,7 +31,7 @@ module.exports = ({ DOM, route, conf$, scan$, urihandler$ }) => {
 
   // RPC console actions
   , clrHist$ = click('[do=clear-console-history]')
-  , execRpc$ = submit('[do=exec-rpc]').map(r => stringArgv(r.cmd))
+  , execRpc$ = submit('[do=exec-rpc]').map(r => parseRpcCmd(r.cmd))
       .merge(click('[do=rpc-help]').mapTo([ 'help' ]))
 
   // New invoice actions
@@ -74,7 +75,7 @@ module.exports = ({ DOM, route, conf$, scan$, urihandler$ }) => {
       .startWith(false)
 
   return { conf$, page$
-         , goHome$, goScan$, goSend$, goRecv$, goNode$, goLogs$, goRpc$
+         , goHome$, goScan$, goSend$, goRecv$, goNode$, goLogs$, goRpc$, goDeposit$
          , goChan$, goNewChan$
          , viewPay$, confPay$
          , execRpc$, clrHist$

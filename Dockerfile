@@ -9,7 +9,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends git \
     $([ -n "$STANDALONE" ] || echo "autoconf automake build-essential libtool libgmp-dev \
                                      libsqlite3-dev python python3 wget zlib1g-dev")
 
-ARG LIGHTNINGD_VERSION=master
+ENV LIGHTNINGD_VERSION=master
 
 RUN [ -n "$STANDALONE" ] || ( \
     git clone https://github.com/Groestlcoin/lightning.git /opt/lightningd \
@@ -21,14 +21,16 @@ RUN [ -n "$STANDALONE" ] || ( \
 # Install groestlcoind
 
 ENV GROESTLCOIN_VERSION 2.16.3
-ENV GROESTLCOIN_URL https://github.com/Groestlcoin/groestlcoin/releases/download/v2.16.3/groestlcoin-2.16.3-x86_64-linux-gnu.tar.gz
+ENV GROESTLCOIN_FILENAME groestlcoin-$GROESTLCOIN_VERSION-x86_64-linux-gnu.tar.gz
+ENV GROESTLCOIN_URL https://github.com/Groestlcoin/groestlcoin/releases/download/v$GROESTLCOIN_VERSION/$GROESTLCOIN_FILENAME
 ENV GROESTLCOIN_SHA256 f15bd5e38b25a103821f1563cd0e1b2cf7146ec9f9835493a30bd57313d3b86f
 
-RUN mkdir /opt/groestlcoin && cd /opt/groestlcoin \
-    && wget -qO groestlcoin.tar.gz "$GROESTLCOIN_URL" \
-    && echo "$GROESTLCOIN_SHA256  groestlcoin.tar.gz" | sha256sum -c - \
-    && tar -xzvf groestlcoin.tar.gz groestlcoin-cli --exclude=*-qt \
-    && rm groestlcoin.tar.gz
+RUN [ -n "$STANDALONE" ] || \
+    (mkdir /opt/groestlcoin && cd /opt/groestlcoin \
+    && wget -qO "$GROESTLCOIN_FILENAME" "$GROESTLCOIN_URL" \
+    && echo "$GROESTLCOIN_SHA256 "$GROESTLCOIN_FILENAME"" | sha256sum -c - \
+    && BD=groestlcoin-$GROESTLCOIN_VERSION/bin \
+    && tar -xzvf "$GROESTLCOIN_FILENAME" $BD/groestlcoind $BD/groestlcoin-cli --strip-components=1)
 
     RUN mkdir /opt/bin && ([ -n "$STANDALONE" ] || \
         (mv /opt/lightningd/cli/lightning-cli /opt/bin/ \
@@ -65,8 +67,8 @@ ENV STANDALONE=$STANDALONE
 
 WORKDIR /opt/spark
 
-RUN ([ -n "$STANDALONE" ] || ( \
-          apt-get update && apt-get install -y --no-install-recommends inotify-tools libgmp-dev libsqlite3-dev xz-utils)) \
+RUN apt-get update && apt-get install -y --no-install-recommends xz-utils inotify-tools \
+        $([ -n "$STANDALONE" ] || echo libgmp-dev libsqlite3-dev) \
     && rm -rf /var/lib/apt/lists/* \
     && ln -s /opt/spark/dist/cli.js /usr/bin/spark-wallet \
     && mkdir /data \
@@ -75,7 +77,7 @@ RUN ([ -n "$STANDALONE" ] || ( \
 COPY --from=builder /opt/bin /usr/bin
 COPY --from=builder /opt/spark /opt/spark
 
-ENV CONFIG=/data/spark/config TLS_PATH=/data/spark/tls TOR_PATH=/data/spark/tor HOST=0.0.0.0
+ENV CONFIG=/data/spark/config TLS_PATH=/data/spark/tls TOR_PATH=/data/spark/tor COOKIE_FILE=/data/spark/cookie HOST=0.0.0.0
 
 # link the hsv3 (Tor Hidden Service V3) node_modules installation directory
 # inside /data/spark/tor/, to persist the Tor Bundle download in the user-mounted volume

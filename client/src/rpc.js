@@ -29,6 +29,7 @@ exports.parseRes = ({ HTTP, SSE }) => {
   , payreq$:   reply('decodepay').map(r => ({ ...r.body, ...r.request.ctx }))
   , invoice$:  reply('invoice').map(r => ({ ...r.body, ...r.request.ctx }))
   , outgoing$: reply('pay').map(r => ({ ...r.body, ...r.request.ctx }))
+  , newaddr$:  reply('newaddr').map(r => ({ address: r.body.address, type: r.request.send.params[0] }))
   , funded$:   reply('connectfund').map(r => r.body)
   , closed$:   reply('closeget').map(r => r.body)
   , execRes$:  reply('console').map(r => ({ ...r.request.send, res: r.body }))
@@ -42,22 +43,24 @@ exports.parseRes = ({ HTTP, SSE }) => {
 
 // RPC commands to send
 // NOTE: "connectfund" and "closeget" are custom rpc commands provided by the Groestlcoin Spark server.
-exports.makeReq = ({ viewPay$, confPay$, newInv$, goLogs$, goChan$, goNewChan$, updChan$, openChan$, closeChan$, execRpc$ }) => O.merge(
+exports.makeReq = ({ viewPay$, confPay$, newInv$, goLogs$, goChan$, goNewChan$, goDeposit$, updChan$, openChan$, closeChan$, execRpc$ }) => O.merge(
   viewPay$.map(bolt11 => [ 'decodepay', [ bolt11 ], { bolt11 } ])
 , confPay$.map(pay    => [ 'pay',       [ pay.bolt11, ...(pay.custom_msat ? [ pay.custom_msat ] : []) ], pay ])
 , newInv$.map(inv     => [ 'invoice',   [ inv.msatoshi, inv.label, inv.description, INVOICE_TTL ], inv ])
 , goLogs$.mapTo(         [ 'getlog' ] )
 
 , updChan$.mapTo(        [ 'listpeers' ] )
-, openChan$.map(d     => [ 'connectfund',  [ d.nodeuri, d.channel_capacity_sat, d.feerate ] ])
+, openChan$.map(d     => [ 'connectfund', [ d.nodeuri, d.channel_capacity_sat, d.feerate ] ])
 , closeChan$.map(d    => [ 'closeget',  [ d.peerid, d.chanid ] ])
+
+, goDeposit$.map(type => [ 'newaddr',   [ type ] ])
 
 , timer(60000).mapTo(    [ 'listinvoices', [], { bg: true } ])
 , timer(60000).mapTo(    [ 'listpayments', [], { bg: true } ])
 , timer(60000).mapTo(    [ 'getinfo',      [], { bg: true } ])
 , timer(60000).merge(goChan$).throttleTime(2000)
               .mapTo(    [ 'listpeers',    [], { bg: true } ])
-, timer(60000).merge(goNewChan$).throttleTime(2000)
+, timer(60000).merge(goNewChan$).merge(goDeposit$).throttleTime(2000)
               .mapTo(    [ 'listfunds',    [], { bg: true } ])
 
 // also send a "getinfo" ping whenever the window regains focus, to check

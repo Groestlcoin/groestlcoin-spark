@@ -23,7 +23,9 @@ exports.nodeInfo = async ({ info, peers, conf: { expert } }) => {
       process.env.BUILD_TARGET != 'web' ? a('.btn.btn-secondary.btn-sm', { attrs: { href: 'settings.html', rel: 'external' }}, 'Server settings') : ''
     , ' '
     , a('.btn.btn-secondary.btn-sm', { attrs: { href: '#/channels' }}, 'Channels')
+    , ' '
+    , a('.btn.btn-secondary.btn-sm', { attrs: { href: '#/deposit' }}, 'Deposit')
     ])
-  , expert ? yaml({ info, peers }) : ''
+  , expert ? yaml(info) : ''
   ])
 }
