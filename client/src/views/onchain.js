@@ -4,7 +4,7 @@ import { yaml, qruri } from './util'
 const labelType = { bech32: 'Bech32', 'p2sh-segwit': 'P2SH' }
     , otherType = { bech32: 'p2sh-segwit', 'p2sh-segwit': 'bech32' }
 
-export const deposit = ({ address, type }) => qruri(`bitcoin:${address}`).then(qr => ({ funds, obalance, unitf, conf: { expert } }) =>
+export const deposit = ({ address, type }) => qruri(`groestlcoin:${address}`).then(qr => ({ funds, obalance, unitf, conf: { expert } }) =>
   div('.onchain-deposit', [
     div('.row', [
       div('.col-sm-6.text-center', [
@@ -17,7 +17,7 @@ export const deposit = ({ address, type }) => qruri(`bitcoin:${address}`).then(q
       ])
     ])
   , div('.my-4.text-center', [
-      a('.btn.btn-primary.btn-lg.mb-1', { attrs: { href: `bitcoin:${address}` } }, 'Fund with wallet')
+      a('.btn.btn-primary.btn-lg.mb-1', { attrs: { href: `groestlcoin:${address}` } }, 'Fund with wallet')
     , ' '
     , button('.btn.btn-secondary.btn-lg.mb-1', { dataset: { newaddrType: otherType[type] } }, `Switch to ${labelType[otherType[type]]}`)
     ])
