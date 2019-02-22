@@ -20,15 +20,26 @@ RUN [ -n "$STANDALONE" ] || ( \
 
 # Install groestlcoind
 
-ENV GROESTLCOIN_VERSION 2.16.3
+ENV GROESTLCOIN_VERSION 2.17.2
 ENV GROESTLCOIN_FILENAME groestlcoin-$GROESTLCOIN_VERSION-x86_64-linux-gnu.tar.gz
 ENV GROESTLCOIN_URL https://github.com/Groestlcoin/groestlcoin/releases/download/v$GROESTLCOIN_VERSION/$GROESTLCOIN_FILENAME
-ENV GROESTLCOIN_SHA256 f15bd5e38b25a103821f1563cd0e1b2cf7146ec9f9835493a30bd57313d3b86f
-
+ENV GROESTLCOIN_SHA256 0eed1a10f8dbb5a361bf74ee201acc47a124abb8916f66a263c95b8f9d1173b
+ENV GROESTLCOIN_ASC_URL https://github.com/Groestlcoin/groestlcoin/releases/download/v$GROESTLCOIN_VERSION/SHA256SUMS.asc
+ENV GROESTLCOIN_PGP_KEY 287AE4CA1187C68C08B49CB2D11BD4F33F1DB499
 RUN [ -n "$STANDALONE" ] || \
     (mkdir /opt/groestlcoin && cd /opt/groestlcoin \
     && wget -qO "$GROESTLCOIN_FILENAME" "$GROESTLCOIN_URL" \
-    && echo "$GROESTLCOIN_SHA256 "$GROESTLCOIN_FILENAME"" | sha256sum -c - \
+    && echo "$GROESTLCOIN_SHA256 $GROESTLCOIN_FILENAME" | sha256sum -c - \
+    && for server in $(shuf -e ha.pool.sks-keyservers.net \
+                             hkp://p80.pool.sks-keyservers.net:80 \
+                             keyserver.ubuntu.com \
+                             hkp://keyserver.ubuntu.com:80 \
+                             pgp.mit.edu) ; do \
+         gpg --batch --keyserver "$server" --recv-keys "$GROESTLCOIN_PGP_KEY" && break || : ; \
+       done \
+    && wget -qO groestlcoin.asc "$GROESTLCOIN_ASC_URL" \
+    && gpg --verify groestlcoin.asc \
+    && cat groestlcoin.asc | grep "$GROESTLCOIN_FILENAME" | sha256sum -c - \
     && BD=groestlcoin-$GROESTLCOIN_VERSION/bin \
     && tar -xzvf "$GROESTLCOIN_FILENAME" $BD/groestlcoind $BD/groestlcoin-cli --strip-components=1)
 
