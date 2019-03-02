@@ -11,15 +11,32 @@ module.exports = async (app, dir=defaultDir, hs_dir=path.join(dir, 'hidden_servi
       resolve(httpSrv.address().port))
   })
 
-  // Get the hsv3 lib, install on demand if its the first time we're using it.
-  const hsv3 = await require('./hsv3-dep')()
+  // Get the granax lib, install on demand if its the first time we're using it.
+  const granax = await require('./granax-dep')()
+
+  const torConfig = {
+    DataDirectory: dir
+  , HiddenServiceDir: hs_dir
+  , HiddenServiceVersion: 3
+  , HiddenServicePort: `80 127.0.0.1:${httpPort}`
+  }
+
+  /*
+  if (process.env.ONION_NONANONYMOUS) {
+    console.log('[warn] Tor Hidden Service configured to run in NON-ANONYMOUS mode. It will provide no privacy.')
+    Object.assign(torConfig, {
+      SocksPort: 0
+    , HiddenServiceNonAnonymousMode: 1
+    , HiddenServiceSingleHopMode: 1
+    })
+  }
+  */
 
   // Setup an hidden service over the HTTP server
   return new Promise((resolve, reject) =>
-    hsv3([ { dataDirectory: hs_dir, virtualPort: 80, localMapping: '127.0.0.1:' + httpPort  } ]
-       , { DataDirectory: dir })
-      .on('error', reject)
-      .on('ready', _ => resolve(`http://${getHost(hs_dir)}`))
+    granax({ authOnConnect: true  }, [ torConfig ])
+    .on('error', reject)
+    .on('ready', _ => resolve(`http://${getHost(hs_dir)}`))
   )
 }
 

@@ -43,13 +43,17 @@ else
     mkdir -p /data/groestlcoin
     RPC_OPT="-datadir=/data/groestlcoin"
 
-    groestlcoind -$NETWORK $RPC_OPT $BITCOIND_OPT &
+    if [ "$NETWORK" != "groestlcoin" ]; then
+      BITCOIND_NET_OPT="-$NETWORK"
+    fi
+
+    groestlcoind $BITCOIND_NET_OPT $RPC_OPT $BITCOIND_OPT &
     echo -n "waiting for cookie... "
     sed --quiet '/^\.cookie$/ q' <(inotifywait -e create,moved_to --format '%f' -qmr /data/groestlcoin)
   fi
 
   echo -n "waiting for RPC... "
-  groestlcoin-cli -$NETWORK $RPC_OPT -rpcwait getblockchaininfo > /dev/null
+  groestlcoin-cli $BITCOIND_NET_OPT $RPC_OPT -rpcwait getblockchaininfo > /dev/null
   echo "ready."
 
   # Setup lightning
