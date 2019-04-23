@@ -1,4 +1,4 @@
-FROM node:8.11-slim as builder
+FROM node:8.15-slim as builder
 
 ARG DEVELOPER
 ARG STANDALONE=1
@@ -71,14 +71,14 @@ RUN npm run dist:npm \
 
 # Prepare final image
 
-FROM node:8.11-slim
+FROM node:8.15-slim
 
 ARG STANDALONE
 ENV STANDALONE=$STANDALONE
 
 WORKDIR /opt/spark
 
-RUN apt-get update && apt-get install -y --no-install-recommends xz-utils inotify-tools \
+RUN apt-get update && apt-get install -y --no-install-recommends xz-utils inotify-tools netcat-openbsd \
         $([ -n "$STANDALONE" ] || echo libgmp-dev libsqlite3-dev) \
     && rm -rf /var/lib/apt/lists/* \
     && ln -s /opt/spark/dist/cli.js /usr/bin/spark-wallet \
