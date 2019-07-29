@@ -1,7 +1,7 @@
 import { div, h2, ul, li, span, pre, strong, small, em, button, header, a, form, input, p, label } from '@cycle/dom'
 import { yaml, omitKey, formGroup, amountField, getChannels, ago, fancyCheckbox } from './util'
 
-const blockInterval = process.env.BLOCK_INTERVAL || 600
+const blockInterval = process.env.BLOCK_INTERVAL || 60
 
 const stateGroups = {
   active: [ 'CHANNELD_NORMAL' ]
