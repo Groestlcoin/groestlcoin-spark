@@ -1,6 +1,5 @@
-import 'babel-polyfill'
+import '@babel/polyfill'
 import 'webrtc-adapter'
-import 'pwacompat'
 
 import run from '@cycle/rxjs-run'
 
@@ -22,11 +21,18 @@ import model  from './model'
 import view   from './view'
 import rpc    from './rpc'
 
+if (process.env.BUILD_TARGET === 'web') {
+  require('pwacompat')
+}
+
 // Send Cordova/Electron users directly to server settings if there are none
 if (process.env.BUILD_TARGET !== 'web' && !localStorage.serverInfo) {
   location.href = 'settings.html' // @xxx side-effects outside of drivers
   throw new Error('Missing server settings, redirecting')
 }
+
+// Get cyclejs to use rxjs-compat-enabled streams
+require("@cycle/run/lib/adapt").setAdapt(stream$ => O.from(stream$))
 
 const serverInfo = process.env.BUILD_TARGET === 'web'
   ? { serverUrl: '.', accessKey: document.querySelector('[name=access-key]').content }

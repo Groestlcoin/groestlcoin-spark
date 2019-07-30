@@ -33,6 +33,15 @@
   // CSRF protection. Require the X-Access header or access-key query string arg for POST requests.
   app.post('*', (req, res, next) => !req.csrfSafe ? res.sendStatus(403) : next())
 
+
+  // CORS
+  process.env.ALLOW_CORS && app.use((req, res, next) => {
+    res.set('Access-Control-Allow-Origin', process.env.ALLOW_CORS)
+    res.set('Access-Control-Allow-Headers', 'Content-Type, Accept')
+    res.set('Access-Control-Allow-Methods', 'POST')
+    next()
+  })
+
   // RPC API
   app.post('/rpc', (req, res, next) =>
     (cmd[req.body.method] ? cmd[req.body.method](...req.body.params)

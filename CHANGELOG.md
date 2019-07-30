@@ -2,11 +2,46 @@
 
 ## Unreleased
 
+- Dropped support for c-lightning before 0.7.x
+
+- Docker: Add standalone arm32v7 image (#93)
+
+  Available using the new multiarch image at `shesek/spark-wallet:standalone` and `shesek/spark-wallet:VERSION-standalone`,
+  or directly using `shesek/spark-wallet:standalone-arm32v7` and `shesek/spark-wallet:VERSION-standalone-arm32v7`.
+
+  Thanks @NicolasDorier!
+
+- Docker: Upgrade to Bitcoin Core v0.18.0 and c-lightning v0.7.1
+
+- Upgrade to RxJS v6, Babel v7, Cycle-run v10
+
+- Allow enabling CORS using `--allow-cors <origin>` (#101)
+
+## 0.2.8 - 2019-06-09
+
+- Security: Make npm-shrinkwrap actually ship with the npm package ([5827098ec](https://github.com/shesek/spark-wallet/commit/5827098ecc301e449e58e6077b0abf4e63aa9635))
+
+- Fix: Make QR scanner work in dark themes (a regression introduced in v0.2.6, #91)
+
+- Fix: Make the "Open wallet" link (bitcoin:<addr>) work in the Android app
+
+- Docker: Use tini to init the container process (#90, thanks @NicolasDorier)
+
+- Update client-side npm dependencies
+
+## 0.2.7 - 2019-06-07
+
+- Fix a bug in the homepage on-chain/channel balances display
+
+## 0.2.6 - 2019-06-07
+
 - Changed the way the balance shown in the top-right corner is calculated. See:
 
   https://github.com/shesek/spark-wallet/issues/62
 
   https://github.com/shesek/spark-wallet/commit/9b500c48c4c32fd61a11995410f17adf9f6cdf8d
+
+- Display channel and on-chain balances separately on the homepage (#67)
 
 - Add support for running a Tor hidden service in non-anonymous mode. This makes the hidden service faster, at the cost of losing the privacy benefits.
 
@@ -15,6 +50,20 @@
   > Non Anonymous Hidden Services on a tor instance in HiddenServiceSingleHopMode make one-hop (direct) circuits between the onion service server, and the introduction and rendezvous points. (Onion service descriptors are still posted using 3-hop paths, to avoid onion service directories blocking the service.) This option makes every hidden service instance hosted by a tor instance a Single Onion Service. One-hop circuits make Single Onion servers easily locatable, but clients remain location-anonymous. However, the fact that a client is accessing a Single Onion rather than a Hidden Service may be statistically distinguishable.
 
   To enable this mode, set `--onion-nonanonymous`.
+
+- Allow specifying a proxy server for making HTTP requests (currently, requests are only sent for fetching the exchange rate)
+  using the standard `HTTP(S)_PROXY`/`ALL_PROXY` environment variables or the `--proxy` CLI arg (which is an alias for `ALL_PROXY`).
+  See [proxy-from-env](https://github.com/Rob--W/proxy-from-env) for more details.
+
+- Add support for fetching exchanges rates from the Wasabi API (#78)
+
+  Can be set with `--rate-provider wasabi` (requires Tor, either as a transparent proxy or using `--proxy socks5h://127.0.0.1:9050`).
+
+- Allow disabling exchange rate lookup using `--no-rates` (#81)
+
+- Switch from Oracle Java to OpenJDK for building the Android app (#79, #84)
+
+- Update to Electron v5
 
 ## 0.2.5 - 2019-02-24
 

@@ -12,6 +12,10 @@ const args = require('meow')(`
       -C, --cookie-file <path> persist generated login credentials to <path> or load them [default: ~/.spark-wallet/cookie]
       --no-cookie-file         disable cookie file [default: false]
 
+      --rate-provider <name>   exchange rate provider, one of "bitstamp" or "wasabi" (requires tor) [default: bitstamp]
+      --no-rates               disable exchange rate lookup [default: false]
+      --proxy <uri>            set a proxy for looking up rates, e.g. socks5h://127.0.0.1:9050 [default: none]
+
       --force-tls              enable TLS even when binding on localhost [default: enable for non-localhost only]
       --no-tls                 disable TLS for non-localhost hosts [default: false]
       --tls-path <path>        directory to read/store key.pem and cert.pem for TLS [default: ~/.spark-wallet/tls/]
@@ -32,6 +36,7 @@ const args = require('meow')(`
       -P, --pairing-url        print URL with embedded access key [default: false]
       --public-url <url>       override public URL used for QR codes [default: http(s)://{host}/]
 
+      --allow-cors <origin>    allow browser CORS requests from <origin> (USE WITH CARE) [default: off]
       --no-webui               run API server without serving client assets [default: false]
       --no-test-conn           skip testing access to c-lightning rpc (useful for init scripts) [default: false]
 
@@ -77,8 +82,9 @@ process.env.VERBOSE && (process.env.DEBUG = `lightning-client,spark,superagent,$
 process.env.ONION_PATH && (process.env.ONION = true) // --onion-path implies --onion
 process.env.ONION_NONANONYMOUS && (process.env.ONION = true) // --onion-nonanonymous implies --onion
 process.env.PAIRING_QR && (process.env.PRINT_QR = true) // --pairing-qr implies --print-qr
+process.env.PROXY && (process.env.ALL_PROXY = process.env.PROXY) // PROXY is an alias for ALL_PROXY
 
 if (process.env.TLS_PATH || process.env.TLS_NAME || process.env.LETSENCRYPT) process.env.FORCE_TLS = true
 
-require('babel-polyfill')
+require('@babel/polyfill')
 require('./app')

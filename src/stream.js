@@ -1,9 +1,8 @@
 import LightningClient from 'lightning-client'
 import EventEmitter from 'events'
-import { get } from 'superagent'
+import { fetchRate } from './exchange-rate'
 
-const rateUrl = 'https://api.coingecko.com/api/v3/simple/price?ids=groestlcoin&vs_currencies=usd'
-    , rateInterval = 60000 // 1 minute
+const rateInterval = 60000 // 1 minute
 
 module.exports = lnPath => {
   const ln = LightningClient(lnPath)
@@ -29,17 +28,19 @@ module.exports = lnPath => {
 
   // Periodically pull GRS<->USD exchange rate
   let lastRate
-  ;(async function getrate() {
-    if (em.listenerCount('rate') || !lastRate) {
-      // only pull if someone is listening or if we don't have a rate yet
-      try { em.emit('rate', lastRate = await get(rateUrl).then(r => r.body.groestlcoin.usd)) }
-      catch (err) { console.error(err.stack || err.toString()) }
-      setTimeout(getrate, rateInterval)
-    } else {
-      // set a shorter interval for the next update check if we skipped this one
-      setTimeout(getrate, 10000)
-    }
-  })()
+  if (fetchRate) {
+    (async function getrate() {
+      if (em.listenerCount('rate') || !lastRate) {
+        // only pull if someone is listening or if we don't have a rate yet
+        try { em.emit('rate', lastRate = await fetchRate()) }
+        catch (err) { console.error(err.stack || err.toString()) }
+        setTimeout(getrate, rateInterval)
+      } else {
+        // set a shorter interval for the next update check if we skipped this one
+        setTimeout(getrate, 10000)
+      }
+    })()
+  }
 
   // GET /stream middleware
   return (req, res) => {

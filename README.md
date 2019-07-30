@@ -198,7 +198,6 @@ IE is unsupported.
 Requires iOS 11.2+ for WebRTC (used by the QR scanner), but works otherwise with iOS 9+.
 Chrome on iOS does not support WebRTC.
 
-
 ## Developing
 
 Spark is written in a reactive-functional style using [rxjs](https://github.com/ReactiveX/rxjs) and [cycle.js](https://cycle.js.org),
@@ -212,11 +211,21 @@ $ npm install
 $ npm start -- --ln-path /data/lightning
 ```
 
+Spark can be built from source using the following commands (more efficient than running the live compliation development server):
+
+```bash
+$ git clone https://github.com/shesek/spark-wallet && cd spark-wallet
+$ npm run dist:npm
+$ ./dist/cli.js --ln-path /data/lightning
+```
+
 Cordova builds can be prepared with `npm run dist:cordova`.
 The `.apk` file will be available in `cordova/platforms/android/app/build/outputs/apk/debug/`.
 
 Electron builds can be prepared with `npm run dist:electron`.
 They will be available under `electron/dist`.
+
+To get more verbose server-side logging, start the server with `--verbose` (or `-V`).
 
 To get more verbose output in the browser developer console, set `localStorage.debug = 'spark:*'`.
 
@@ -254,6 +263,10 @@ $ spark-wallet --help
     -C, --cookie-file <path> persist generated login credentials to <path> or load them [default: ~/.spark-wallet/cookie]
     --no-cookie-file         disable cookie file [default: false]
 
+    --rate-provider <name>   exchange rate provider, one of "bitstamp" or "wasabi" (requires tor) [default: bitstamp]
+    --no-rates               disable exchange rate lookup [default: false]
+    --proxy <uri>            set a proxy for looking up rates, e.g. socks5h://127.0.0.1:9050 [default: none]
+
     --force-tls              enable TLS even when binding on localhost [default: enable for non-localhost only]
     --no-tls                 disable TLS for non-localhost hosts [default: false]
     --tls-path <path>        directory to read/store key.pem and cert.pem for TLS [default: ~/.spark-wallet/tls/]
@@ -266,6 +279,7 @@ $ spark-wallet --help
 
     -o, --onion              start Tor Hidden Service (v3) [default: false]
     -O, --onion-path <path>  directory to read/store hidden service data [default: ~/.spark-wallet/tor/]
+    --onion-nonanonymous     setup hidden service in non-anonymous mode [default: false]
 
     -k, --print-key          print access key to console (for use with the Cordova/Electron apps) [default: false]
     -q, --print-qr           print QR code with the server URL [default: false]
@@ -273,6 +287,7 @@ $ spark-wallet --help
     -P, --pairing-url        print URL with embedded access key [default: false]
     --public-url <url>       override public URL used for QR codes [default: http(s)://{host}/]
 
+    --allow-cors <origin>    allow browser CORS requests from <origin> (USE WITH CARE) [default: off]
     --no-webui               run API server without serving client assets [default: false]
     --no-test-conn           skip testing access to c-lightning rpc (useful for init scripts) [default: false]
 
