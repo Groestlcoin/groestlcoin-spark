@@ -32,7 +32,7 @@ The distribution files and a `SHA256SUMS` file will be created in `./docker-buil
 
 The npm package should be reproducible even without docker.
 It should be sufficient to use node >=v6 and npm v5.4.2 to v5.6.x (preferably node v8.11.3 and npm v5.6.0).
-Run `npm run dist:npm -- --pack-tgz` to create `spark-wallet-[x.y.z]-npm.tgz` in main directory.
+Run `npm run dist:npm -- --pack-tgz` to create `groestlcoin-spark-[x.y.z]-npm.tgz` in main directory.
 
 The `npm-shrinkwrap.json` file inside the npm package commits to integrity checksums
 for the entire dependency graph using
@@ -43,9 +43,9 @@ for the entire dependency graph using
 Android `apk` files that are signed using the android code signing process cannot be reproduced independently.
 Spark therefore provides two separate `apk` files:
 
-- `spark-wallet-x.y.z-release.apk` - a release build signed using android's signing process that is not reproducible.
+- `groestlcoin-spark-x.y.z-release.apk` - a release build signed using android's signing process that is not reproducible.
 
-- `spark-wallet-x.y.z-debug.apk` - a debug build that is not signed using android's signing process but is reproducible.
+- `groestlcoin-spark-x.y.z-debug.apk` - a debug build that is not signed using android's signing process but is reproducible.
 
 ### Travis-CI
 

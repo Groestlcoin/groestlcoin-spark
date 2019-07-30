@@ -5,7 +5,7 @@
     <author email="groestlcoin@gmail.com" href="https://github.com/groestlcoin">Groestlcoin Developers</author>
     <content src="index.html" />
     <access origin="*" />
-    <allow-intent href="bitcoin:*" />
+    <allow-intent href="groestlcoin:*" />
     <platform name="android">
         <icon density="ldpi" src="res/android/icon-36-ldpi.png" />
         <icon density="mdpi" src="res/android/icon-48-mdpi.png" />

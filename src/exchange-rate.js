@@ -5,9 +5,9 @@ import request from 'superagent'
 require('superagent-proxy')(request)
 
 const rateProviders = {
-  bitstamp: {
-    url: 'https://www.bitstamp.net/api/v2/ticker/btcusd'
-  , parser: r => r.body.last
+  coingecko: {
+    url: 'https://api.coingecko.com/api/v3/simple/price?ids=groestlcoin&vs_currencies=usd'
+  , parser: r => r.body.groestlcoin.usd
   }
 
 , wasabi: {
@@ -17,7 +17,7 @@ const rateProviders = {
 }
 
 if (!process.env.NO_RATES) {
-  const rateProvider = rateProviders[process.env.RATE_PROVIDER || 'bitstamp']
+  const rateProvider = rateProviders[process.env.RATE_PROVIDER || 'coingecko']
   if (!rateProvider) throw new Error('Invalid rate provider')
 
   exports.fetchRate = _ =>

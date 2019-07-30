@@ -19,7 +19,7 @@ Running Spark as a Tor hidden service has the following benefits:
 
 - Provides a static hostname even if you don't have a static IP.
 
-Tor data files (including secret key material for the hidden service) will be saved to `~/.spark-wallet/tor/`. This can be overridden with `--onion-path`.
+Tor data files (including secret key material for the hidden service) will be saved to `~/.groestlcoin-spark/tor/`. This can be overridden with `--onion-path`.
 
 ### Connecting from Android
 

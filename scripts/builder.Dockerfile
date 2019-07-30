@@ -82,7 +82,7 @@ CMD (test ! -c /dev/fuse || (mv -f cordova cordova-src && mkdir cordova && disor
  && mkdir -p /target && rm -rf /target/* \
  && echo '-----BEGIN SHA256SUM-----' \
  && ./scripts/dist-shasums.sh | tee /target/SHA256SUMS \
- && mv spark-wallet-*-npm.tgz /target \
+ && mv groestlcoin-spark-*-npm.tgz /target \
  && mv -f dist /target/npm-unpacked \
  && mv -f electron/dist /target/electron \
  && mv -f cordova/platforms/android/app/build/outputs/apk/debug /target/cordova-android-debug \

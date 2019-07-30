@@ -8,7 +8,7 @@ electron/server.bundle.js
 client/dist
 client/www/*.css
 dist
-spark-wallet-*-npm.tgz
+groestlcoin-spark-*-npm.tgz
 node_modules
 **/node_modules
 doc

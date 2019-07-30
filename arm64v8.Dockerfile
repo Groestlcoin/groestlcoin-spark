@@ -3,7 +3,7 @@ FROM node:8.15-slim as builder
 ARG DEVELOPER
 ENV STANDALONE=1
 
-# Install build c-lightning for third-party packages (c-lightning/bitcoind)
+# Install build c-lightning for third-party packages (c-lightning/groestlcoind)
 RUN apt-get update && apt-get install -y --no-install-recommends git \
     qemu qemu-user-static qemu-user binfmt-support
 
@@ -42,7 +42,7 @@ WORKDIR /opt/spark
 COPY --from=builder /usr/bin/qemu-aarch64-static /usr/bin/qemu-aarch64-static
 RUN apt-get update && apt-get install -y --no-install-recommends xz-utils inotify-tools netcat-openbsd \
     && rm -rf /var/lib/apt/lists/* \
-    && ln -s /opt/spark/dist/cli.js /usr/bin/spark-wallet \
+    && ln -s /opt/spark/dist/cli.js /usr/bin/groestlcoin-spark \
     && mkdir /data \
     && ln -s /data/lightning $HOME/.lightning
 

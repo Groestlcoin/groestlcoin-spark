@@ -1,11 +1,4 @@
-# Spark Lightning Wallet
-
-[![npm release](https://img.shields.io/npm/v/spark-wallet.svg)](https://www.npmjs.com/package/spark-wallet)
-[![build status](https://api.travis-ci.org/shesek/spark-wallet.svg)](https://travis-ci.org/shesek/spark-wallet)
-[![docker release](https://img.shields.io/docker/pulls/shesek/spark-wallet.svg)](https://hub.docker.com/r/shesek/spark-wallet)
-[![MIT license](https://img.shields.io/github/license/shesek/spark-wallet.svg)](https://github.com/shesek/spark-wallet/blob/master/LICENSE)
-[![Pull Requests Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](http://makeapullrequest.com)
-[![IRC](https://img.shields.io/badge/chat-on%20freenode-brightgreen.svg)](https://webchat.freenode.net/?channels=spark-wallet)
+# Groestlcoin Spark Lightning Wallet
 
 :zap: Simple & minimalistic
 :zap: Purely off-chain
@@ -68,24 +61,24 @@ If you're running into permission issues,
 [try this](https://docs.npmjs.com/getting-started/fixing-npm-permissions#option-two-change-npms-default-directory).)
 
 ```bash
-$ npm install -g spark-wallet
+$ npm install -g groestlcoin-spark
 
-$ spark-wallet # defaults: --ln-path ~/.lightning --port 9737
+$ groestlcoin-spark # defaults: --ln-path ~/.lightning --port 9737
 ```
 
-Or simply `$ npx spark-wallet`, which will install and start Spark in one go.
+Or simply `$ npx groestlcoin-spark`, which will install and start Groestlcoin Spark in one go.
 
 Spark will generate and print a random username and password that'll be used to login into the wallet,
-and persist them to `~/.spark-wallet/cookie` (can be controlled with `--cookie-file <path>`).
+and persist them to `~/.groestlcoin-spark/cookie` (can be controlled with `--cookie-file <path>`).
 To specify your own login credentials, set `--login [user]:[pass]` or the `LOGIN` environment variable.
 
 To access the wallet, open `http://localhost:9737/` in your browser and login with the username/password.
 
-See `$ spark-wallet --help` for the full list of command-line options (also available under [*CLI options*](#cli-options)).
+See `$ groestlcoin-spark --help` for the full list of command-line options (also available under [*CLI options*](#cli-options)).
 
 #### Configuration file
 
-Spark reads configuration options from `~/.spark-wallet/config` (can be overridden with `--config/-c <path>`).
+Spark reads configuration options from `~/.groestlcoin-spark/config` (can be overridden with `--config/-c <path>`).
 The expected format is one `key=value` per line, like so:
 
 ```ini
@@ -123,7 +116,7 @@ Electron-based desktop apps for Linux (packaged as `deb`, `AppImage`, `snap` and
 macOS (as `zip`) and Windows (installer and a portable) are available for download from the
 [releases page](https://github.com/groestlcoin/groestlcoin-spark/releases).
 
-The desktop apps comes bundled with the Spark server-side component. If you're connecting to a local
+The desktop apps comes bundled with the Groestlcoin Spark server-side component. If you're connecting to a local
 c-lightning instance, you [can configure](https://user-images.githubusercontent.com/877904/44618385-68f40100-a87d-11e8-891b-79a0f2d59751.png)
 the desktop app to connect to it directly without manually setting up the Spark server.
 
@@ -133,10 +126,10 @@ running c-lightning and connecting through it.
 ## Mobile app
 
 A Cordova-based native app for Android is available for download from the
-[Google Play app store](https://play.google.com/store/apps/details?id=com.spark.wallet)
-or from the [releases page](https://github.com/shesek/spark-wallet/releases).
+[Google Play app store](https://play.google.com/store/apps/details?id=org.groestlcoin.spark)
+or from the [releases page](https://github.com/groestlcoin/groestlcoin-spark/releases).
 
-The app requires a Spark server to communicate with, which you need [to setup](#server-installation) as a prerequisite.
+The app requires a Groestlcoin Spark server to communicate with, which you need [to setup](#server-installation) as a prerequisite.
 
 When the app starts for the first time, you'll need to configure your Spark server URL and API access key.
 You can print your access key to the console by starting Spark with `--print-key/-k`.
@@ -214,7 +207,7 @@ $ npm start -- --ln-path /data/lightning
 Spark can be built from source using the following commands (more efficient than running the live compliation development server):
 
 ```bash
-$ git clone https://github.com/shesek/spark-wallet && cd spark-wallet
+$ git clone https://github.com/groestlcoin/groestlcoin-spark && cd groestlcoin-spark
 $ npm run dist:npm
 $ ./dist/cli.js --ln-path /data/lightning
 ```
@@ -263,7 +256,7 @@ $ spark-wallet --help
     -C, --cookie-file <path> persist generated login credentials to <path> or load them [default: ~/.spark-wallet/cookie]
     --no-cookie-file         disable cookie file [default: false]
 
-    --rate-provider <name>   exchange rate provider, one of "bitstamp" or "wasabi" (requires tor) [default: bitstamp]
+    --rate-provider <name>   exchange rate provider, one of "coingecko" or "wasabi" (requires tor) [default: coingecko]
     --no-rates               disable exchange rate lookup [default: false]
     --proxy <uri>            set a proxy for looking up rates, e.g. socks5h://127.0.0.1:9050 [default: none]
 

@@ -7,7 +7,7 @@ import isIp   from 'is-ip'
 import fs     from 'fs'
 import mkdirp from 'mkdirp'
 
-const defaultDir = path.join(require('os').homedir(), '.spark-wallet', 'tls')
+const defaultDir = path.join(require('os').homedir(), '.groestlcoin-spark', 'tls')
 
 module.exports = (app, name=app.settings.host, dir=defaultDir, leEmail) => {
   const tlsOpt = leEmail ? letsencrypt(name, dir, leEmail) : selfsigned(name, dir)
@@ -86,7 +86,7 @@ const letsencrypt = (name, dir, email) => {
 
       if (err.errno == 'EACCES') {
         console.error(`\nYou don't have prmission to bind on ${err.address}:${err.port}.`);
-        console.error('See https://github.com/shesek/spark-wallet/blob/master/doc/tls.md#letsencrypt-integration for advice.');
+        console.error('See https://github.com/groestlcoin/groestlcoin-spark/blob/master/doc/tls.md#letsencrypt-integration for advice.');
       } else if (err.errno == 'EADDRINUSE') {
         console.error(`\n${err.address}:${err.port} is already being used by some other program. Stop it and try again.`);
       }

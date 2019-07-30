@@ -19,7 +19,7 @@ TZ=UTC touch -t "8510260815.00" package.json npm-shrinkwrap.json README.md CHANG
 TZ=UTC find dist -exec touch -t "8510260815.00" {} \;
 # this is done automatically since npm v5.7.1, but the latest stable 5.7.x and 5.8.x are currently buggy (https://github.com/npm/npm/issues/19989)
 
-# Package to spark-wallet-[x.y.z]-npm.tgz
+# Package to groestlcoin-spark-[x.y.z]-npm.tgz
 if [[ "$1" == "--pack-tgz" ]]; then
   rm -f groestlcoin-spark-*-npm.tgz
   packpath=`npm pack`

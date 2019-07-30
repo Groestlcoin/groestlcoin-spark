@@ -1,9 +1,9 @@
 #!/bin/bash
 set -eo pipefail
 
-docker_name=shesek/spark-wallet
+docker_name=groestlcoin/groestlcoin-spark
 
-sha256sum spark-wallet-*-npm.tgz \
+sha256sum groestlcoin-spark-*-npm.tgz \
           electron/dist/*.{AppImage,deb,snap,tar.gz,exe,zip} \
           cordova/platforms/android/app/build/outputs/apk/{debug,release}/*.apk \
   2> /dev/null \

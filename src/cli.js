@@ -2,23 +2,23 @@
 
 const args = require('meow')(`
     Usage
-      $ spark-wallet [options]
+      $ groestlcoin-spark [options]
 
     Options
       -l, --ln-path <path>     path to c-lightning data directory [default: ~/.lightning]
       -p, --port <port>        http(s) server port [default: 9737]
       -i, --host <host>        http(s) server listen address [default: localhost]
       -u, --login <userpwd>    http basic auth login, "username:password" format [default: generate random]
-      -C, --cookie-file <path> persist generated login credentials to <path> or load them [default: ~/.spark-wallet/cookie]
+      -C, --cookie-file <path> persist generated login credentials to <path> or load them [default: ~/.groestlcoin-spark/cookie]
       --no-cookie-file         disable cookie file [default: false]
 
-      --rate-provider <name>   exchange rate provider, one of "bitstamp" or "wasabi" (requires tor) [default: bitstamp]
+      --rate-provider <name>   exchange rate provider, one of "coingecko" or "wasabi" (requires tor) [default: coingecko]
       --no-rates               disable exchange rate lookup [default: false]
       --proxy <uri>            set a proxy for looking up rates, e.g. socks5h://127.0.0.1:9050 [default: none]
 
       --force-tls              enable TLS even when binding on localhost [default: enable for non-localhost only]
       --no-tls                 disable TLS for non-localhost hosts [default: false]
-      --tls-path <path>        directory to read/store key.pem and cert.pem for TLS [default: ~/.spark-wallet/tls/]
+      --tls-path <path>        directory to read/store key.pem and cert.pem for TLS [default: ~/.groestlcoin-spark/tls/]
       --tls-name <name>        common name for the TLS cert [default: {host}]
 
       --letsencrypt <email>    enable CA-signed certificate via LetsEncrypt [default: false]
@@ -27,7 +27,7 @@ const args = require('meow')(`
       --le-debug               display additional debug information for LetsEncrypt [default: false]
 
       -o, --onion              start Tor Hidden Service (v3) [default: false]
-      -O, --onion-path <path>  directory to read/store hidden service data [default: ~/.spark-wallet/tor/]
+      -O, --onion-path <path>  directory to read/store hidden service data [default: ~/.groestcoin-spark/tor/]
       --onion-nonanonymous     setup hidden service in non-anonymous mode [default: false]
 
       -k, --print-key          print access key to console (for use with the Cordova/Electron apps) [default: false]
@@ -40,16 +40,16 @@ const args = require('meow')(`
       --no-webui               run API server without serving client assets [default: false]
       --no-test-conn           skip testing access to c-lightning rpc (useful for init scripts) [default: false]
 
-      -c, --config <path>      path to config file [default: ~/.spark-wallet/config]
+      -c, --config <path>      path to config file [default: ~/.groestlcoin-spark/config]
       -V, --verbose            display debugging information [default: false]
       -h, --help               output usage information
       -v, --version            output version number
 
     Example
-      $ spark-wallet -l ~/.lightning
+      $ groestlcoin-spark -l ~/.lightning
 
     All options may also be specified as environment variables:
-      $ LN_PATH=/data/lightning PORT=8070 NO_TLS=1 spark-wallet
+      $ LN_PATH=/data/lightning PORT=8070 NO_TLS=1 groestlcoin-spark
 
 `, { flags: { lnPath: {alias:'l'}, login: {alias:'u'}, cookieFile: {alias:'C'}
             , port: {alias:'p'}, host: {alias:'i'}
@@ -62,7 +62,7 @@ const args = require('meow')(`
 
 // Load config file
 const os = require('os'), fs = require('fs'), path = require('path'), ini = require('ini')
-    , confPath = args.config || process.env.CONFIG || path.join(os.homedir(), '.spark-wallet', 'config')
+    , confPath = args.config || process.env.CONFIG || path.join(os.homedir(), '.groestlcoin-spark', 'config')
     , fileConf = fs.existsSync(confPath) ? ini.parse(fs.readFileSync(confPath, 'utf-8')) : {}
 
 const conf = Object.assign({}, fileConf, args)
@@ -75,7 +75,7 @@ Object.keys(conf).filter(k => k.length > 1)
 
 // Enable cookie file by default in the same dir as the config file
 if (!process.env.NO_COOKIE_FILE && !process.env.COOKIE_FILE)
-  process.env.COOKIE_FILE = path.join(os.homedir(), '.spark-wallet', 'cookie')
+  process.env.COOKIE_FILE = path.join(os.homedir(), '.groestlcoin-spark', 'cookie')
 
 process.env.NODE_ENV || (process.env.NODE_ENV = 'production')
 process.env.VERBOSE && (process.env.DEBUG = `lightning-client,spark,superagent,${process.env.DEBUG||''}`)

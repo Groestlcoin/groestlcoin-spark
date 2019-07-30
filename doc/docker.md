@@ -4,7 +4,7 @@ You can use Docker To setup Spark, a groestlcoind node and a c-lightning node al
 
 ```bash
 $ docker run -it -v ~/.spark-docker:/data -p 9737:9737 \
-             shesek/spark-wallet --login bob:superSecretPass456
+             groestlcoin/groestlcoin-spark --login bob:superSecretPass456
 ```
 
 You will then be able to access the Spark wallet at `https://localhost:9737`.
@@ -31,7 +31,7 @@ mount the lightning data directory to `/etc/lightning`:
 ```bash
 $ docker run -it -v ~/.spark-docker:/data -p 9737:9737 \
              -v ~/.lightning:/etc/lightning \
-             shesek/spark-wallet:standalone
+             groestlcoin/groestlcoin-spark:standalone
 ```
 
 Note the `:standalone` version for the docker image, which doesn't include

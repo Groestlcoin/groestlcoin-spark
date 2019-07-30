@@ -2,7 +2,7 @@ import path from 'path'
 import http from 'http'
 import fs   from 'fs'
 
-const defaultDir = path.join(require('os').homedir(), '.spark-wallet', 'tor')
+const defaultDir = path.join(require('os').homedir(), '.groestlcoin-spark', 'tor')
 
 module.exports = async (app, dir=defaultDir, hs_dir=path.join(dir, 'hidden_service')) => {
   // Start HTTP server (non TLS) on a random port

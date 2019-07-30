@@ -83,15 +83,15 @@ fi
 mkdir -p $TOR_PATH/tor-installation/node_modules
 
 if [ -z "$STANDALONE" ]; then
-  # when not in standalone mode, run spark-wallet as an additional background job
+  # when not in standalone mode, run groestlcoin-spark as an additional background job
   echo -e "\nStarting groestlcoin spark..."
-  spark-wallet -l $LN_PATH "$@" $SPARK_OPT &
+  groestlcoin-spark -l $LN_PATH "$@" $SPARK_OPT &
 
   # shutdown the entire process when any of the background jobs exits (even if successfully)
   wait -n
   kill -TERM $$
 else
-  # in standalone mode, replace the process with spark-wallet
+  # in standalone mode, replace the process with groestlcoin-spark
   echo -e "\nStarting groestlcoin spark (standalone mode)..."
-  exec spark-wallet -l $LN_PATH "$@" $SPARK_OPT
+  exec groestlcoin-spark -l $LN_PATH "$@" $SPARK_OPT
 fi
