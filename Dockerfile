@@ -6,8 +6,8 @@ ENV STANDALONE=$STANDALONE
 
 # Install build c-lightning for third-party packages (c-lightning/groestlcoind)
 RUN apt-get update && apt-get install -y --no-install-recommends git \
-    $([ -n "$STANDALONE" ] || echo "autoconf automake build-essential libtool libgmp-dev \
-                                     libsqlite3-dev python python3 wget zlib1g-dev")
+    $([ -n "$STANDALONE" ] || echo "autoconf automake build-essential gettext libtool libgmp-dev \
+                                     libsqlite3-dev python python3 python3-mako wget zlib1g-dev")
 
 ENV LIGHTNINGD_VERSION=master
 
@@ -15,11 +15,13 @@ RUN [ -n "$STANDALONE" ] || ( \
     git clone https://github.com/Groestlcoin/lightning.git /opt/lightningd \
     && cd /opt/lightningd \
     && git checkout $LIGHTNINGD_VERSION \
+    # `sed` below needed for v0.7.2, can be removed in v0.7.3.
+    # see https://github.com/ElementsProject/lightning/issues/2970, https://github.com/ElementsProject/lightning/pull/2967
+    && sed -i 's#$(EXTERNAL_HEADERS)#$(EXTERNAL_HEADERS) tools/test/gen_test.h#' tools/test/Makefile \
     && DEVELOPER=$DEVELOPER ./configure \
     && make)
 
 # Install groestlcoind
-
 ENV GROESTLCOIN_VERSION 2.17.2
 ENV GROESTLCOIN_FILENAME groestlcoin-$GROESTLCOIN_VERSION-x86_64-linux-gnu.tar.gz
 ENV GROESTLCOIN_URL https://github.com/Groestlcoin/groestlcoin/releases/download/v$GROESTLCOIN_VERSION/$GROESTLCOIN_FILENAME
