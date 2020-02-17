@@ -1,5 +1,42 @@
 # Changelog
 
+## Unreleased
+
+- Fix: Resolve TLS issues with NodeJS 10 (#55, h/t @sumBTC!)
+
+- Fix: Some QR codes not read properly in the web QR scanner (#134)
+
+## 0.2.12 - 2019-12-22
+
+- Docker: Update to c-lightning v0.8.0
+
+- Docker: Compatibility with c-lightning v0.8.0 network subdirectories
+
+- Detect if the "base directory" is provided and default to the bitcoin mainnet network subdirectory within in. (#130)
+
+  This allows users to start spark using the existing command they use (with i.e. `--ln-path ~/.lightning`)
+  to ease the upgrade to c-lightning v0.8.0, but this usage is considered deprecated and will eventually be removed.
+  Users are advised to explicitly specify the path to the network subdirectory with `--ln-path ~/.lightning/<network>`.
+
+- Don't display unconfirmed onchain balance (#129)
+
+- Cordova Android: Allow connecting to server in cleartext (#132)
+
+  This was possible before v0.2.11 which updated the Android SDK to version 28.
+  Not really recommended, but useful for development and testnet/regtest demonstrations.
+
+## 0.2.11 - 2019-12-15
+
+- Fix channels view (#128)
+
+- Fix Android crashes caused by plugin-local-notifications (https://github.com/katzer/cordova-plugin-local-notifications/issues/1541)
+
+## 0.2.10 - 2019-12-08
+
+- Docker: Update to Bitcoin Core v0.19.0.1 and c-lightning v0.7.3
+
+- Fix bug with missing channel reserve (3d1f3b2cc84627ac38ff64bd09aa1d3b5fd74bfe)
+
 ## 0.2.9 - 2019-10-17
 
 - *BREAKING CHANGE:* Dropped support for c-lightning before 0.7.0

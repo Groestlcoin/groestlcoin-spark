@@ -22,7 +22,7 @@ RUN [ -n "$STANDALONE" ] || ( \
     && make)
 
 # Install groestlcoind
-ENV GROESTLCOIN_VERSION 2.17.2
+ENV GROESTLCOIN_VERSION 2.18.2
 ENV GROESTLCOIN_FILENAME groestlcoin-$GROESTLCOIN_VERSION-x86_64-linux-gnu.tar.gz
 ENV GROESTLCOIN_URL https://github.com/Groestlcoin/groestlcoin/releases/download/v$GROESTLCOIN_VERSION/$GROESTLCOIN_FILENAME
 ENV GROESTLCOIN_SHA256 e90f6ceb56fbc86ae17ee3c5d6d3913c422b7d98aa605226adb669acdf292e9e

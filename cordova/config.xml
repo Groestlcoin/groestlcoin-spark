@@ -13,6 +13,9 @@
         <icon density="xhdpi" src="res/android/icon-96-xhdpi.png" />
         <icon density="xxhdpi" src="res/android/icon-144-xxhdpi.png" />
         <icon density="xxxhdpi" src="res/android/icon-192-xxxhdpi.png" />
+        <edit-config file="app/src/main/AndroidManifest.xml" mode="merge" target="/manifest/application" xmlns:android="http://schemas.android.com/apk/res/android">
+            <application android:usesCleartextTraffic="true" />
+        </edit-config>
     </platform>
     <plugin name="cordova-plugin-customurlscheme" spec="^4.3.0">
         <variable name="URL_SCHEME" value="lightning" />
@@ -22,7 +25,8 @@
     </plugin>
     <plugin name="cordova-plugin-screen-orientation" spec="^3.0.1" />
     <plugin name="cordova-plugin-qrscanner" spec="^2.6.0" />
-    <plugin name="cordova-plugin-local-notification" spec="^0.9.0-beta.3" />
     <plugin name="cordova-plugin-whitelist" spec="^1.3.3" />
+    <plugin name="cordova-plugin-local-notification" spec="https://github.com/katzer/cordova-plugin-local-notifications.git#caff55ec758fdf298029ae98aff7f6a8a097feac" />
+    <preference name="android-targetSdkVersion" value="28" />
     <engine name="android" spec="^7.1.4" />
 </widget>
