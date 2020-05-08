@@ -1,11 +1,11 @@
-FROM node:8.15-slim as builder
+FROM node:12.16-slim as builder
 
 ARG DEVELOPER
 ARG STANDALONE=1
 ENV STANDALONE=$STANDALONE
 
 # Install build c-lightning for third-party packages (c-lightning/groestlcoind)
-RUN apt-get update && apt-get install -y --no-install-recommends git \
+RUN apt-get update && apt-get install -y --no-install-recommends git ca-certificates gpg dirmngr wget  \
     $([ -n "$STANDALONE" ] || echo "autoconf automake build-essential gettext libtool libgmp-dev \
                                      libsqlite3-dev python python3 python3-mako wget zlib1g-dev")
 
@@ -15,9 +15,6 @@ RUN [ -n "$STANDALONE" ] || ( \
     git clone https://github.com/Groestlcoin/lightning.git /opt/lightningd \
     && cd /opt/lightningd \
     && git checkout $LIGHTNINGD_VERSION \
-    # `sed` below needed for v0.7.2, can be removed in v0.7.3.
-    # see https://github.com/ElementsProject/lightning/issues/2970, https://github.com/ElementsProject/lightning/pull/2967
-    && sed -i 's#$(EXTERNAL_HEADERS)#$(EXTERNAL_HEADERS) tools/test/gen_test.h#' tools/test/Makefile \
     && DEVELOPER=$DEVELOPER ./configure \
     && make)
 
@@ -78,7 +75,7 @@ RUN npm run dist:npm \
 
 # Prepare final image
 
-FROM node:8.15-slim
+FROM node:12.16-slim
 
 ARG STANDALONE
 ENV STANDALONE=$STANDALONE

@@ -1,10 +1,10 @@
-FROM node:8.15-slim as builder
+FROM node:12.16-slim as builder
 
 ARG DEVELOPER
 ENV STANDALONE=1
 
 # Install build c-lightning for third-party packages (c-lightning/groestlcoind)
-RUN apt-get update && apt-get install -y --no-install-recommends git \
+RUN apt-get update && apt-get install -y --no-install-recommends git wget ca-certificates \
     qemu qemu-user-static qemu-user binfmt-support
 
 RUN npm config set unsafe-perm true
@@ -34,7 +34,7 @@ RUN npm run dist:npm \
 
 # Prepare final image
 
-FROM arm32v7/node:8.15-slim
+FROM arm32v7/node:12.16-slim
 
 ENV STANDALONE=1
 
