@@ -10,10 +10,10 @@ $ lightningd --network regtest --lightning-dir /tmp/spark-env/ln1 --bitcoin-data
 $ lightningd --network regtest --lightning-dir /tmp/spark-env/ln2 --bitcoin-datadir /tmp/spark-env/grs --addr 127.0.0.1:9601
 
 $ alias grs='groestlcoin-cli --regtest --datadir=/tmp/spark-env/grs' \
-        ln1='lightning-cli --lightning-dir /tmp/spark-env/ln1' \
-        ln2='lightning-cli --lightning-dir /tmp/spark-env/ln2'
+        ln1='lightning-cli --network regtest --lightning-dir /tmp/spark-env/ln1' \
+        ln2='lightning-cli --network regtest --lightning-dir /tmp/spark-env/ln2'
 
-$ grs generate 101 && grs sendtoaddress $(ln1 newaddr | jq -r .address) 5 && grs generate 1
+$ grs generatetoaddress 101 $(ln1 newaddr | jq -r .address)
 
 # wait for onchain funds to show up on `ln1 listfunds` (updated every 30s)
 
