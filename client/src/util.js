@@ -1,5 +1,5 @@
 import debug  from 'debug'
-import bolt11 from 'bolt11grs'
+import bolt11 from 'bolt11'
 import numbro from 'numbro'
 import stringArgv from 'string-argv'
 import { Big as big } from 'big.js'
