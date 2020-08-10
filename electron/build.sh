@@ -36,5 +36,5 @@ fi
 if [[ -z "$SKIP_PACKAGE" ]]; then
   electron-builder "$@" -c.extraMetadata.version=`node -p 'require("../package").version'`
    # when faketime is used, correct the timestamp for the final dist files (it does not effect their hash)
-   command -v faketime && touch dist/*
+   #command -v faketime && touch dist/*
 fi
