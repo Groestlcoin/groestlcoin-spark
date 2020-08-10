@@ -208,6 +208,7 @@ Spark can be built from source using the following commands (more efficient than
 
 ```bash
 $ git clone https://github.com/groestlcoin/groestlcoin-spark && cd groestlcoin-spark
+$ npm install
 $ npm run dist:npm
 $ ./dist/cli.js --ln-path /data/lightning
 ```
