@@ -5,7 +5,7 @@ shopt -s expand_aliases
 [[ -d node_modules ]] || npm install
 
 # use faketime (if available) to make reproducible electron builds (works for deb, snap, tar.gz and zip, but not for AppImage)
-command -v faketime && alias electron-builder="TZ=UTC faketime -f '2017-11-08 16:58:41' electron-builder"
+#command -v faketime && alias electron-builder="TZ=UTC faketime -f '2017-11-08 16:58:41' electron-builder"
 
 # Build UI assets
 if [[ -z "$SKIP_CLIENT" ]]; then
