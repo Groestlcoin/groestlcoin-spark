@@ -1,8 +1,14 @@
 # Changelog
 
-## Unreleased
+## 0.2.16 - 2020-08-11
 
-Hotfix release - properly handle outgoing payments with no requested amount
+Hotfix release
+
+- Properly handle outgoing payments without an associated requested amount (5c0a61ec40eb)
+
+- Workaround for incorrect bolt11 string reported by c-lightning (#151, https://github.com/ElementsProject/lightning/issues/3921)
+
+- Fix the build script to properly install the client devDependencies (#152)
 
 ## 0.2.15 - 2020-08-07
 
